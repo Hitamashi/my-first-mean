@@ -1,0 +1,79 @@
+﻿<div class="content-wrapper" ng-strict-di>
+        <!-- Content Header (Page header) -->
+        <!--
+        <section class="content-header">
+        </section>
+        -->
+        <!-- Main content -->
+        <section class="content">
+		    <div class="row">
+                <div class="col-md-3"></div>
+                <div class="col-md-6">
+                    <div class="box box-primary">
+                    <div class="box-header with-border">
+                        <h3 class="box-title">Timesheet form</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <!-- form start -->
+                    <form role="form">
+                      <div class="box-body">
+                        <div class="form-group">
+                          <label for="username">Username</label>
+                          <input id="username" type="text" class="form-control" ng-model="timesheet.Name" placeholder="" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="date">Date</label>
+                            <!--<input class="form-control" date-time format="DD-MM-YYYY" minView='year' view='year' ng-model="claimDate">-->
+                            <input id="date" type="text" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="timesheet.Date" is-open="date.open1" close-text="Close" alt-input-formats="altInputFormats" ng-click="date.open1=!date.open1;" placeholder="01-01-1990"/>
+                            <!-- /.input group -->
+                        </div>
+                        <div class="form-group">
+                          <label for="timesheetcode">ALS30 Timesheet Code</label>
+                          <input id="timesheetcode" type="text" class="form-control" ng-model="timesheet.TimesheetCode" placeholder="CSS-0000">
+                        </div>
+                        <div class="form-group">
+                          <label for="hours">Hours</label>
+                          <input id="hours" type="number" class="form-control" ng-model="timesheet.Hours" placeholder="0">
+                        </div>
+                        <div class="form-group">
+                          <label for="ims">IMS Code (If CSS-0052 or CSS-0053, please input IMS code)</label>
+                          <input id="ims" type="text" class="form-control" ng-model="timesheet.IMS" placeholder="CSS-0000">
+                        </div>
+                        <div class="form-group">
+                          <label for="notes">Description</label>
+                          <textarea id="notes" class="form-control" ng-model="timesheet.Description" rows="3" placeholder="Enter ..."></textarea>
+                        </div>
+                        <div class="form-group">
+                          <label for="phase">Phase (Select N/A if ticket number other than CSS-0052)</label>
+
+						  <select id="phase" name="phase" ng-model="timesheet.Phase" class="form-control">
+							<option ng-repeat="option in phaseOptions" ng-value="option">{{option}}</option>
+						  </select>
+                        </div>
+                        <div class="form-group has-success" ng-show="!error && status">
+                            <span class="help-block"><i class="fa fa-check"></i> {{status}}</span>
+                        </div>
+
+                        <div class="form-group has-error" ng-show="error && status">
+                            <span class="help-block"><i class="fa fa-bell-o"></i> {{status}}</span>
+                        </div>
+                      </div>
+
+                      <!-- /.box-body -->
+
+                      <div class="box-footer">
+                        <button class="btn btn-primary pull-right" ng-click="submit()">Submit</button>
+                        <button class="btn btn-default" ng-click="reset()">Reset</button>
+                      </div>
+                      <pre ng-show="isDebug"> {{timesheet | json}} </pre>
+                    </form>
+                    </div>
+                </div>
+            </div>
+
+            <!--- End Test--->
+
+        </section><!-- /.content -->
+
+      <!-- End dialog modal template -->
+      </div>

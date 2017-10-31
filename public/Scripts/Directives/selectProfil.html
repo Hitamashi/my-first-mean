@@ -1,0 +1,40 @@
+﻿<div id="selectProfil" class="modal fade" role="dialog" ng-controller="modalSelectProfilController">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"><b>{{team.name = info.team}}</b></h4>
+            </div>
+            <div class="modal-body text-left">
+
+                <div class="form-group">
+                    <label class="control-label"> Activate </label>
+                    <label class="switch-button">
+                      <input type="checkbox" ng-model="team.active">
+                      <span class="slider-button round"></span>
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label class="control-label"> Name </label>
+                    <input type="text" class="form-control" ng-model="team.team"/>
+                </div>
+                <div class="form-group">
+                    <label class="control-label"> Choose profil </label>
+                    <div class="">
+                        <ui-select multiple ng-model="team.data" theme="bootstrap"
+                        ng-disabled="ctrl.disabled" close-on-select="false" title="Choose profil">
+                            <ui-select-choices repeat="profil in listProfils | propsFilter: {key: $select.search, id: $select.search}">
+                                <div ng-bind-html="profil.key + ' (' + profil.id +')' | highlight: $select.search"></div>
+                            </ui-select-choices>
+                            <ui-select-match placeholder=" Select profil ... ">{{$item.key}} ({{$item.id}})</ui-select-match>
+                        </ui-select>
+                    </div>
+                    <p>All: {{listProfils.length}}</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-primary" ng-click="RefreshData(info)" data-dismiss="modal">Submit</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

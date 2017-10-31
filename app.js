@@ -3,14 +3,21 @@ var app = express();
 var db = require('./db');
 global.__root   = __dirname + '/'; 
 
+
+app.use(express.static('./public'));
+
 app.get('/api', function (req, res) {
   res.status(200).send('API works.');
 });
 
-var UserController = require(__root + 'user/UserController');
+var UserController = require(__root + 'api/user/UserController');
 app.use('/api/users', UserController);
 
-var AuthController = require(__root + 'auth/AuthController');
+var AuthController = require(__root + 'api/auth/AuthController');
 app.use('/api/auth', AuthController);
+
+app.use(function(req, res) {
+  res.status(404).send({url: req.originalUrl + ' not found'})
+});
 
 module.exports = app;

@@ -1,0 +1,114 @@
+﻿<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper" ng-strict-di>
+<!-- Content Header (Page header) -->
+<!--
+<section class="content-header">
+</section>
+-->
+<!-- Main content -->
+<section class="content">
+	<div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Edit Person leave balance</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form role="form">
+                <div class="box-body">
+
+                <div class="form-group">
+                    <label for="person">Select employee</label>
+					<select id="person" name="person" class="form-control" ng-model="selPerson"
+                            ng-options="p.Name for p in lstPerson">
+					</select>
+                </div>
+                <div>
+                <table class="table table-condensed">
+                    <tbody>
+                        <tr>
+                            <th scope="row">Name</th>
+                            <td>{{selPerson.Name}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Key</th>
+                            <td>{{selPerson.Key}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Email</th>
+                            <td>{{selPerson.Email}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Joined date</th>
+                            <td>{{selPerson.JoinedDate | date}}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Active</th>
+                            <td>{{selPerson.isActive? 'Yes': 'No'}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+
+                <div class="form-group" ng-show="isDebug">
+                    <label for="name">Name: </label> {{selPerson.Name}}
+                    <input id="name" type="text" class="form-control" ng-model="selPerson.Name" placeholder="" disabled>
+                </div>
+                <div class="form-group" ng-show="isDebug">
+                    <label for="key">Key: </label> {{selPerson.Key}}
+                    <input id="key" type="text" class="form-control" ng-model="selPerson.Key" placeholder="" disabled >
+                </div>
+                <div class="form-group" ng-show="isDebug">
+                    <label for="email">Email: </label> {{selPerson.Email}}
+                    <input id="email" type="text" class="form-control" ng-model="selPerson.Email" placeholder="" disabled >
+                </div>
+                <div class="form-group" ng-show="isDebug">
+                    <label for="joined">Joined date: </label> {{selPerson.JoinedDate | date}}
+                    <input id="joined" type="text" class="form-control" ng-model="selPerson.JoinedDate" placeholder="" disabled >
+                </div>
+                <div class="form-group" ng-show="isDebug">
+                    <label for="active">Is Active: </label> {{selPerson.isActive? 'Yes': 'No'}}
+                    <input id="active" type="text" class="form-control" ng-model="selPerson.isActive" placeholder="" disabled >
+                </div>
+
+                <div class="form-group">
+                    <label for="annual">Annual Leave Balance: </label>
+                    <input id="annual" type="number" class="form-control" ng-model="selPerson.LeaveAnnual" placeholder="" ng-show="selPerson" min="0">
+                </div>
+
+                <div class="form-group">
+                    <label for="medical">Medical Leave Balance: </label>
+                    <input id="medical" type="number" class="form-control" ng-model="selPerson.LeaveMedical" placeholder="" ng-show="selPerson" min="0">
+                </div>
+
+                <div class="form-group has-success" ng-show="!error && status">
+                    <span class="help-block"><i class="fa fa-check"></i> {{status}}</span>
+                </div>
+
+                <div class="form-group has-error" ng-show="error && status">
+                    <span class="help-block"><i class="fa fa-bell-o"></i> {{status}}</span>
+                </div>
+                </div>
+
+                <!-- /.box-body -->
+
+                <div class="box-footer">
+                <button class="btn btn-primary pull-right" ng-click="submit()">Submit</button>
+                <button class="btn btn-default" ng-click="reset()">Reset</button>
+                </div>
+                <pre ng-show="isDebug"> {{selPerson | json}} </pre>
+            </form>
+            </div>
+        </div>
+    </div>
+
+    <!--- End Test--->
+    <div >
+                
+    </div>
+</section><!-- /.content -->
+
+<!-- End dialog modal template -->
+</div><!-- /.content-wrapper -->

@@ -1,0 +1,77 @@
+﻿<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper" ng-strict-di>
+<!-- Content Header (Page header) -->
+<!--
+<section class="content-header">
+</section>
+-->
+<!-- Main content -->
+<section class="content">
+	<div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Claim form</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form role="form">
+                <div class="box-body">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input id="username" type="text" class="form-control" ng-model="claim.Name" placeholder="" required>
+                </div>
+                <div class="form-group">
+                    <label for="claimdate">Date of Claim</label>
+                    <!--<input class="form-control" date-time format="DD-MM-YYYY" minView='year' view='year' ng-model="claimDate">-->
+                    <input id="claimdate" type="text" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="claim.Claim_date" is-open="date.open" close-text="Close" alt-input-formats="altInputFormats" ng-click="date.open=!date.open;" placeholder="01-01-1990"/>
+                    <!-- /.input group -->
+                </div>
+                <div class="form-group">
+                    <label for="typeClaim">ALS30 Claim Code</label>
+                    <input id="typeClaim" type="text" class="form-control" ng-model="claim.types_of_claim" placeholder="CSS-0000">
+                </div>
+                <div class="form-group">
+                    <label for="imsTicket">IMS No. (*If you choose CSS-0100 or CSS-0098, please put IMS code here)</label>
+                    <input id="imsTicket" type="text" class="form-control" ng-model="claim.ims_ticket" placeholder="IMS code">
+                </div>
+                <div class="form-group">
+                    <label for="amount">Amount</label>
+                    <input id="amount" type="number" class="form-control" ng-model="claim.amount" placeholder="0">
+                </div>
+                <div class="form-group">
+                    <label for="notes">Notes</label>
+                    <textarea id="notes" class="form-control" ng-model="claim.notes" rows="3" placeholder="Enter ..."></textarea>
+                </div>
+                <div class="form-group has-success" ng-show="!error && status">
+                    <span class="help-block"><i class="fa fa-check"></i>{{status}}</span>
+                </div>
+
+                <div class="form-group has-error" ng-show="error && status">
+                    <span class="help-block"><i class="fa fa-bell-o"></i>{{status}}</span>
+                </div>
+                </div>
+
+                <!-- /.box-body -->
+
+                <div class="box-footer">
+                <button class="btn btn-primary pull-right" ng-click="submitClaim()" ng-show="!loading">Submit</button>
+                <button class="btn btn-primary pull-right" ng-show="loading"><i class="fa fa-spinner fa-pulse"></i></button>
+                <button class="btn btn-default" ng-click="resetClaim()">Reset</button>
+                </div>
+                <pre ng-show="isDebug"> {{claim | json}} </pre>
+            </form>
+            </div>
+        </div>
+    </div>
+
+    <!--- End Test--->
+    <div >
+                
+    </div>
+</section><!-- /.content -->
+
+<!-- End dialog modal template -->
+</div><!-- /.content-wrapper -->
+

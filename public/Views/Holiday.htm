@@ -1,0 +1,113 @@
+﻿<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper" ng-strict-di>
+<!-- Content Header (Page header) -->
+<!--
+<section class="content-header">
+</section>
+-->
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Import Holiday by excel file</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form role="form">
+                <div class="box-body">
+
+                <div class="form-group">
+                    <label for="date">Input file</label> (Excel file only)
+                    <input id="file" type="file" import-sheet-js="" opts="excelData" multiple="false" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" />
+                </div>
+
+                <table class="table table-condensed" ng-show="excelData.dataPreview">
+                    <caption>Preview data (first 5 data row). Total: {{excelData.data.length-1}} rows</caption>
+                    <thead><tr><th>Date</th><th>Description</th></tr></thead>
+                    <tbody>
+                        <tr ng-repeat="data in excelData.dataPreview">
+                            <td>{{data[0]}}</th><td>{{data[1]}}</th>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="form-group" ng-show="(excelData.loading && !excelData.done) || loadingUpload">
+                    <span class="help-block"><i class="fa fa-spinner fa-pulse"></i> Loading </span>
+                </div>
+
+                <div class="form-group has-success" ng-show="!errorUpload && statusUpload">
+                    <span class="help-block"><i class="fa fa-check"></i> {{statusUpload}}</span>
+                </div>
+
+                <div class="form-group has-error" ng-show="errorUpload && statusUpload">
+                    <span class="help-block"><i class="fa fa-bell-o"></i> {{statusUpload}}</span>
+                </div>
+                </div>
+
+                <!-- /.box-body -->
+
+                <div class="box-footer">
+                <button class="btn btn-primary pull-right" ng-click="submitUpload()">Import</button>
+                <button class="btn btn-default" ng-click="resetUpload()">Reset</button>
+                <a class="btn btn-default" href="../PublicHoliday.xlsx" title="Download template file"><i class="fa fa-download" aria-hidden="true"></i> Template</a>
+                
+                </div>
+                <pre ng-show="isDebug"> {{excelData | json}} </pre>
+            </form>
+            </div>
+        </div>
+    </div>
+
+	<div class="row">
+        <div class="col-md-3"></div>
+        <div class="col-md-6">
+            <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Holiday create</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form role="form">
+                <div class="box-body">
+                 <div class="form-group">
+                    <label for="date">Date</label>
+                    <!--<input class="form-control" date-time format="DD-MM-YYYY" minView='year' view='year' ng-model="claimDate">-->
+                    <input id="date" type="text" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="holiday.Date" is-open="date.open1" close-text="Close" alt-input-formats="altInputFormats" ng-click="date.open1=!date.open1;" placeholder="01-01-1990" required/>
+                    <!-- /.input group -->
+                </div>
+                <div class="form-group">
+                    <label for="notes">Description</label>
+                    <textarea id="notes" class="form-control" ng-model="holiday.Description" rows="3" placeholder="Enter ..."></textarea>
+                </div>
+                <div class="form-group has-success" ng-show="!error && status">
+                    <span class="help-block"><i class="fa fa-check"></i> {{status}}</span>
+                </div>
+
+                <div class="form-group has-error" ng-show="error && status">
+                    <span class="help-block"><i class="fa fa-bell-o"></i> {{status}}</span>
+                </div>
+                </div>
+
+                <!-- /.box-body -->
+
+                <div class="box-footer">
+                <button class="btn btn-primary pull-right" ng-click="submit()">Submit</button>
+                <button class="btn btn-default" ng-click="reset()">Reset</button>
+                </div>
+                <pre ng-show="isDebug"> {{holiday | json}} </pre>
+            </form>
+            </div>
+        </div>
+    </div>
+
+    <!--- End Test--->
+    <div >
+                
+    </div>
+</section><!-- /.content -->
+
+<!-- End dialog modal template -->
+</div><!-- /.content-wrapper -->

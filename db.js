@@ -1,2 +1,2 @@
 var mongoose = require('mongoose');
-mongoose.connect('mongodb://127.0.0.1:27017/securing-rest-apis-with-jwt', { useMongoClient: true });
+mongoose.connect('mongodb://user_rw:rwpassword@ds243055.mlab.com:43055/mydb', { useMongoClient: true });
