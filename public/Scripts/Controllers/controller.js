@@ -1,4 +1,23 @@
-﻿app.controller('ClaimCtrl', ['$scope', '$rootScope', '$filter', '$interval', '$timeout', '$cookies', 'DataService',
+﻿app.controller('AuthCtrl', ['$scope', '$rootScope', '$filter', '$cookies', '$window',
+function ($scope, $rootScope, $filter, $cookies,$window) {
+
+    $scope.checkAuth = function(){
+        var user = $cookies.get("User");
+        $.notify("Notify");
+        if(user) return true;
+        else $window.location.href = '/login.html';
+    }
+
+    $scope.checkAuth();
+
+    DataService.getmyIP().then(function (data) {
+        $scope.claim["Submitted From"] = data.ip;
+    }, function (error) {
+        console.log(error);
+    });
+}]);
+
+app.controller('ClaimCtrl', ['$scope', '$rootScope', '$filter', '$interval', '$timeout', '$cookies', 'DataService',
 function ($scope, $rootScope, $filter, $interval, $timeout, $cookies, DataService) {
     $scope.isDebug = false;
     $scope.claim = {amount:0,ims_ticket:'N/A',notes:''};
