@@ -1,17 +1,10 @@
-﻿app.controller('AuthCtrl', ['$scope', '$rootScope', '$filter', '$cookies', '$window',
-function ($scope, $rootScope, $filter, $cookies,$window) {
+﻿app.controller('AuthCtrl', ['$scope', '$rootScope', '$filter', '$cookies', '$window', 'DataService', 'AuthService',
+function ($scope, $rootScope, $filter, $cookies, $window, DataService, AuthService) {
 
-    $scope.checkAuth = function(){
-        var user = $cookies.get("User");
-        $.notify("Notify");
-        if(user) return true;
-        else $window.location.href = '/login.html';
-    }
-
-    $scope.checkAuth();
+    AuthService.checkAuth();
 
     DataService.getmyIP().then(function (data) {
-        $scope.claim["Submitted From"] = data.ip;
+        $.notify(data.ip);
     }, function (error) {
         console.log(error);
     });

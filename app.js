@@ -10,7 +10,7 @@ app.get('/api', function (req, res) {
   res.status(200).send('API works.');
 });
 
-var UserController = require(__root + 'api/user/UserController');
+var UserController = require(__root + 'api/user/UserRoutes');
 app.use('/api/users', UserController);
 
 var AuthController = require(__root + 'api/auth/AuthController');

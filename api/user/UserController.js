@@ -1,14 +1,9 @@
 var express = require('express');
-var router = express.Router();
-var bodyParser = require('body-parser');
 
-var VerifyToken = require('../auth/VerifyToken');
-
-router.use(bodyParser.urlencoded({ extended: true }));
 var User = require('./User');
 
 // CREATES A NEW USER
-router.post('/', VerifyToken, function (req, res) {
+exports.createUser = function (req, res) {
 
     //Check exist
     User.find({ 
@@ -48,42 +43,39 @@ router.post('/', VerifyToken, function (req, res) {
                     });
             }
         });
-});
+};
 
 // RETURNS ALL THE USERS IN THE DATABASE
-router.get('/', VerifyToken, function (req, res) {
+exports.listUser = function (req, res) {
     User.find({},{ password: 0 }, function (err, users) {
         if (err) return res.status(500).send("There was a problem finding the users.");
         res.status(200).send(users);
     });
-});
+};
 
 // GETS A SINGLE USER FROM THE DATABASE
-router.get('/:id', VerifyToken, function (req, res) {
+exports.getOneUser = function (req, res) {
     User.findById(req.params.id, { password: 0 }, function (err, user) {
         if (err) return res.status(500).send("There was a problem finding the user.");
         if (!user) return res.status(404).send("No user found.");
         res.status(200).send(user);
     });
-});
+};
 
 // DELETES A USER FROM THE DATABASE
-router.delete('/:id',VerifyToken, function (req, res) {
+exports.removeUser = function (req, res) {
     User.findByIdAndRemove(req.params.id, function (err, user) {
         if (err) return res.status(500).send("There was a problem deleting the user.");
         res.status(200).send("User: "+ user.name +" was deleted.");
     });
-});
+};
 
 // UPDATES A SINGLE USER IN THE DATABASE
 // Added VerifyToken middleware to make sure only an authenticated user can put to this route
-router.put('/:id',  VerifyToken, function (req, res) {
+exports.updateUser = function (req, res) {
     req.body.modifiedDate = new Date();
     User.findByIdAndUpdate(req.params.id, req.body, {new: true}, function (err, user) {
         if (err) return res.status(500).send("There was a problem updating the user.");
         res.status(200).send(user);
     });
-});
-
-
-module.exports = router;
+};

@@ -13,7 +13,7 @@
         .then(function (response) {
             if (typeof response.data === 'object') {
                 response.data.ip = response.data.query;
-                //console.log(response.data);
+                console.log(response.data);
                 return response.data;
             } else {
                 // invalid response
