@@ -1,7 +1,7 @@
 ﻿app.factory('DataService', ["$http", "$q", "$filter", function ($http, $q, $filter) {
 
     function getmyIP() {
-        var url = 'http://ip-api.com/json';
+        var url = 'https://api.ipify.org/?format=json';
 
         return $http({
             url: url,
@@ -12,8 +12,6 @@
         })
         .then(function (response) {
             if (typeof response.data === 'object') {
-                response.data.ip = response.data.query;
-                console.log(response.data);
                 return response.data;
             } else {
                 // invalid response

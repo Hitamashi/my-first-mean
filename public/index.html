@@ -36,6 +36,7 @@
     <script src="/Scripts/Vendor/angular-route.js" type="text/javascript"></script>
     <script src="/Scripts/Vendor/xlsx.full.min.js" type="text/javascript"></script>
     <script src="Scripts/Vendor/bootstrap-notify.min.js"></script>
+    <script src="Scripts/Vendor/bootstrap-notify-custom.js"></script>
 
     <script src="/Scripts/Controllers/main.js" type="text/javascript"></script>
     <script src="/Scripts/Directives/importSheetJs.js" type="text/javascript"></script>
@@ -68,6 +69,9 @@
           
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
+              <li class="">
+                <a href > Hello <strong>{{USER_NAME}}</strong></a>
+              </li>
               <li class="">
                 <a href ng-click="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
               </li>

@@ -10,10 +10,11 @@
 	<link href='https://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
 	<link type="text/css" rel="stylesheet" href="Styles/login.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-	
+	<link rel="stylesheet" href="Styles/dashboard.min.css">
 	<script src="Scripts/Vendor/jquery.min.js" type="text/javascript"></script>
 	<script src="Scripts/Vendor/bootstrap.min.js"></script>
 	<script src="Scripts/Vendor/bootstrap-notify.min.js"></script>
+	<script src="Scripts/Vendor/bootstrap-notify-custom.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
 	<title>My mean</title>
 
@@ -21,8 +22,8 @@
 
 <body>
 <!-- Main content -->
-<div class="wrapper">
-	<div class="container">
+<div class="wrapper-login">
+	<div class="container-login">
 		<h1>Welcome</h1>
 		
 		<form class="form">
@@ -72,23 +73,26 @@
 	}
 
 	function checkCookie() {
-	    var user = getCookie("HM_USER_ID");
+	    var user = getCookie("HM_ID");
 	    if (user != "") {
 	        $.notify("Welcome again " + user);
+	        $('.form').fadeOut(500);
+			$('.wrapper').addClass('form-success');
 	        //GOTO main page
+	        window.setTimeout(function(){
+				window.location.href="/";
+			}, 1000);
 	    }
 	}
 
 	$("#login-button").click(function(event){
 		event.preventDefault();
-		alert($('.form').serialize());
 		$.ajax({
 		  	type: "POST",
 		  	url: "/api/auth/login",
 		  	data: $('.form').serialize()
 		})
 		.done(function(data){
-			console.log(data);
 			//setCookie("HM_USER_ID", "Hitamashi",1);
 			if(data.auth){
 				$('.form').fadeOut(500);
@@ -96,11 +100,14 @@
 				window.setTimeout(function(){
 					window.location.href="/";
 				}, 1000);
-				setCookie("HM_USER_ID",data.token);
+				setCookie("HM_ID", data.token);
+				setCookie("HM_USER_ID", data.user_id);
 			}
 			else{
 				$.notify(
 					{
+						icon:"icon fa fa-ban",
+						title: "Error",
 						message:"Wrong username or password!"
 					},
 					{

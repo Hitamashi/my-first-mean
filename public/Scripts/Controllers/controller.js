@@ -2,12 +2,38 @@
 function ($scope, $rootScope, $filter, $cookies, $window, DataService, AuthService) {
 
     $scope.ok = false;
-    if(AuthService.checkAuth()) $scope.ok = true;
-    else $window.location.href = '/login.html';
+    if(AuthService.checkAuth()) {
+        $scope.ok = true;
+        if($cookies.get("HM_USER_ID")){
+            $scope.USER_ID= $cookies.get("HM_USER_ID");
+            $scope.USER_NAME= $cookies.get("HM_USER_NAME");
+            $scope.USER_EMAIL= $cookies.get("HM_USER_EMAIL");
+            $scope.USER_ROLE= $cookies.get("HM_USER_ROLE");
+        }
+        else{
+            AuthService.getProfile().then(function (data) {
+                $cookies.put("HM_USER_ID", data._id);
+                $cookies.put("HM_USER_NAME", data.name);
+                $cookies.put("HM_USER_EMAIL", data.email);
+                $cookies.put("HM_USER_ROLE", JSON.stringify(data.role));
+            
+                $scope.USER_ID= data.id;
+                $scope.USER_NAME= data.name;
+                $scope.USER_EMAIL= data.email;
+                $scope.USER_ROLE= data.role;
+
+            }, function (error) {
+                console.log(error);
+            });    
+        }
+        
+    }
+    else 
+        $window.location.href = '/login.html';
     
 
     DataService.getmyIP().then(function (data) {
-        $.notify(data.ip);
+        $.notify({message: data.ip,title:'My IP',icon:"icon fa fa-info"},{type: 'info'});
     }, function (error) {
         console.log(error);
     });
@@ -16,7 +42,6 @@ function ($scope, $rootScope, $filter, $cookies, $window, DataService, AuthServi
         AuthService.logout();
         $window.location.href = '/login.html';
     }
-
 
 }]);
 
