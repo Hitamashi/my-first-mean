@@ -73,15 +73,15 @@
 	}
 
 	function checkCookie() {
-	    var user = getCookie("HM_ID");
+	    var user = getCookie("HM_USER_NAME");
 	    if (user != "") {
 	        $.notify("Welcome again " + user);
 	        $('.form').fadeOut(500);
-			$('.wrapper').addClass('form-success');
+			$('.wrapper-login').addClass('form-success-login');
 	        //GOTO main page
 	        window.setTimeout(function(){
 				window.location.href="/";
-			}, 1000);
+			}, 4000);
 	    }
 	}
 
@@ -96,12 +96,11 @@
 			//setCookie("HM_USER_ID", "Hitamashi",1);
 			if(data.auth){
 				$('.form').fadeOut(500);
-				$('.wrapper').addClass('form-success');
+				$('.wrapper-login').addClass('form-success-login');
 				window.setTimeout(function(){
 					window.location.href="/";
 				}, 1000);
 				setCookie("HM_ID", data.token);
-				setCookie("HM_USER_ID", data.user_id);
 			}
 			else{
 				$.notify(

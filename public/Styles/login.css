@@ -49,7 +49,7 @@ body :-ms-input-placeholder {
   margin-top: -200px;
   overflow: hidden;
 }
-.wrapper-login.form-success .container h1 {
+.wrapper-login.form-success-login .container-login h1 {
   -webkit-transform: translateY(85px);
           transform: translateY(85px);
 }
