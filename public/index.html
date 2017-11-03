@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Small App</title>
+    <title>My mean</title>
 
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport"> 
@@ -104,9 +104,10 @@
         </section>
         <!-- /.sidebar -->
       </aside>
-      <div ng-controller="AuthCtrl"></div>
       <!-- Content Wrapper. Contains page content -->
-       <div ng-view></div>
+      <div ng-controller="AuthCtrl as auth">
+        <div ng-view ng-show="auth.ok"></div>
+      </div>
       <!-- /.content-wrapper -->
       <!-- Main Footer -->
       <footer class="main-footer">

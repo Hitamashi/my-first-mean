@@ -1,7 +1,10 @@
 ﻿app.controller('AuthCtrl', ['$scope', '$rootScope', '$filter', '$cookies', '$window', 'DataService', 'AuthService',
 function ($scope, $rootScope, $filter, $cookies, $window, DataService, AuthService) {
 
-    AuthService.checkAuth();
+    $scope.ok = false;
+    if(AuthService.checkAuth()) $scope.ok = true;
+    else $window.location.href = '/login.html';
+    
 
     DataService.getmyIP().then(function (data) {
         $.notify(data.ip);
