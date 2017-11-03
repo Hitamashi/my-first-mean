@@ -19,11 +19,11 @@ router.post('/login', function(req, res) {
 
   User.findOne({ email: req.body.email }, function (err, user) {
     if (err) return res.status(500).send('Error on the server.');
-    if (!user) return res.status(404).send('No user found.');
+    if (!user) return res.status(200).send({ auth: false, token: null });
     
     // check if the password is valid
     var passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
-    if (!passwordIsValid) return res.status(401).send({ auth: false, token: null });
+    if (!passwordIsValid) return res.status(200).send({ auth: false, token: null });
 
     // if user is found and password is valid
     // create a token

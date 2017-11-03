@@ -11,6 +11,13 @@ function ($scope, $rootScope, $filter, $cookies, $window, DataService, AuthServi
     }, function (error) {
         console.log(error);
     });
+
+    $scope.logout = function(){
+        AuthService.logout();
+        $window.location.href = '/login.html';
+    }
+
+
 }]);
 
 app.controller('ClaimCtrl', ['$scope', '$rootScope', '$filter', '$interval', '$timeout', '$cookies', 'DataService',
