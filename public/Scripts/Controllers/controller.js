@@ -39,8 +39,31 @@ function ($scope, $rootScope, $filter, $cookies, $window, DataService, AuthServi
     });
 
     $scope.logout = function(){
-        AuthService.logout();
-        $window.location.href = '/login.html';
+        $window.swal({
+            title: 'Logout',
+            text: "You really want to go?",
+            type: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then(function () {
+            $window.swal({type:'success', title:'Logout success', timer:1500,showConfirmButton:false})
+            .then(
+                function(){},
+                function(dismiss){
+                    if(dismiss=='timer'){
+                        AuthService.logout();
+                        $window.location.href = '/login.html';
+                    }
+                }
+            );
+
+            //AuthService.logout();
+            //$window.location.href = '/login.html';
+        });
+        //AuthService.logout();
+        //$window.location.href = '/login.html';
     }
 
 }]);

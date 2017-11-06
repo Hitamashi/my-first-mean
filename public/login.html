@@ -24,7 +24,7 @@
 <!-- Main content -->
 <div class="wrapper-login">
 	<div class="container-login">
-		<h1>Welcome</h1>
+		<h1 id="welcome">Welcome</h1>
 		
 		<form class="form">
 			<input type="email" name="email" placeholder="Username" required>
@@ -73,11 +73,13 @@
 	}
 
 	function checkCookie() {
-	    var user = getCookie("HM_USER_NAME");
+	    var user = decodeURIComponent(getCookie("HM_USER_NAME"));
 	    if (user != "") {
-	        $.notify("Welcome again " + user);
+	        //$.notify("Welcome again " + user);
 	        $('.form').fadeOut(500);
+	        $('#welcome').html('Welcome <strong>' + user +'</strong>');
 			$('.wrapper-login').addClass('form-success-login');
+			$
 	        //GOTO main page
 	        window.setTimeout(function(){
 				window.location.href="/";
