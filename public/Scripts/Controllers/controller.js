@@ -1,7 +1,9 @@
-﻿app.controller('AuthCtrl', ['$scope', '$rootScope', '$filter', '$cookies', '$window', 'DataService', 'AuthService',
-function ($scope, $rootScope, $filter, $cookies, $window, DataService, AuthService) {
+﻿app.controller('AuthCtrl', ['$scope', '$rootScope', '$filter', '$cookies', '$window', 'DataService', 'AuthService', 'Pusher'
+,function ($scope, $rootScope, $filter, $cookies, $window, DataService, AuthService, Pusher) {
 
     $scope.ok = false;
+
+
     if(AuthService.checkAuth()) {
         $scope.ok = true;
         if($cookies.get("HM_USER_ID")){
@@ -31,6 +33,11 @@ function ($scope, $rootScope, $filter, $cookies, $window, DataService, AuthServi
     else 
         $window.location.href = '/login.html';
     
+    if($scope.USER_ROLE && $scope.USER_ROLE.indexOf("admin")){
+        Pusher.subscribe('newLogin', 'login', function (user) {
+            $.notify({message: "New login: "+ user.name ,title:'Notification',icon:"icon fa fa-info"},{type: 'info'});
+        });
+    }
 
     DataService.getmyIP().then(function (data) {
         $.notify({message: data.ip,title:'My IP',icon:"icon fa fa-info"},{type: 'info'});

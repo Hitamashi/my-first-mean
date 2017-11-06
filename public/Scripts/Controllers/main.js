@@ -1,4 +1,4 @@
-﻿var app = angular.module('appSentinel', ['ui.bootstrap', 'ngAnimate', 'ngSanitize', 'ui.select', 'ngCookies', 'ngRoute']);
+﻿var app = angular.module('appSentinel', ['ui.bootstrap', 'ngAnimate', 'ngSanitize', 'ui.select', 'ngCookies', 'ngRoute','doowb.angular-pusher']);
 
 app.config(function ($routeProvider) {
     $routeProvider
@@ -28,3 +28,14 @@ app.config(function ($routeProvider) {
     })
     ;
 });
+
+app.config(['PusherServiceProvider',
+  function(PusherServiceProvider) {
+    PusherServiceProvider
+    .setToken('ec3c2fa791f9b21e7070')
+    .setOptions({
+        cluster: 'ap1',
+        encrypted: true
+    });
+  }
+]);
