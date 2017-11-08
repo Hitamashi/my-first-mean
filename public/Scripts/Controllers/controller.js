@@ -10,7 +10,7 @@
             $scope.USER_ID= $cookies.get("HM_USER_ID");
             $scope.USER_NAME= $cookies.get("HM_USER_NAME");
             $scope.USER_EMAIL= $cookies.get("HM_USER_EMAIL");
-            $scope.USER_ROLE= $cookies.get("HM_USER_ROLE");
+            $scope.USER_ROLE= JSON.parse($cookies.get("HM_USER_ROLE"));
         }
         else{
             AuthService.getProfile().then(function (data) {
@@ -28,16 +28,16 @@
                 console.log(error);
             });    
         }
+
+        if($scope.USER_ROLE && $scope.USER_ROLE.indexOf("admin") != -1){
+            Pusher.subscribe('newLogin', 'login', function (user) {
+                $.notify({message: "New login: "+ user.name ,title:'Notification',icon:"icon fa fa-info"},{type: 'info'});
+            });
+        }
         
     }
     else 
         $window.location.href = '/login.html';
-    
-    if($scope.USER_ROLE && $scope.USER_ROLE.indexOf("admin")){
-        Pusher.subscribe('newLogin', 'login', function (user) {
-            $.notify({message: "New login: "+ user.name ,title:'Notification',icon:"icon fa fa-info"},{type: 'info'});
-        });
-    }
 
     DataService.getmyIP().then(function (data) {
         $.notify({message: data.ip,title:'My IP',icon:"icon fa fa-info"},{type: 'info'});
@@ -65,12 +65,7 @@
                     }
                 }
             );
-
-            //AuthService.logout();
-            //$window.location.href = '/login.html';
         });
-        //AuthService.logout();
-        //$window.location.href = '/login.html';
     }
 
 }]);
