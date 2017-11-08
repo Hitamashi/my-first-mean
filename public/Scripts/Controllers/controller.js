@@ -11,6 +11,12 @@
             $scope.USER_NAME= $cookies.get("HM_USER_NAME");
             $scope.USER_EMAIL= $cookies.get("HM_USER_EMAIL");
             $scope.USER_ROLE= JSON.parse($cookies.get("HM_USER_ROLE"));
+
+            if($scope.USER_ROLE && $scope.USER_ROLE.indexOf("admin") != -1){
+                Pusher.subscribe('newLogin', 'login', function (user) {
+                    $.notify({message: "New login: "+ user.name ,title:'Notification',icon:"icon fa fa-info"},{type: 'info'});
+                });
+            }
         }
         else{
             AuthService.getProfile().then(function (data) {
@@ -24,17 +30,16 @@
                 $scope.USER_EMAIL= data.email;
                 $scope.USER_ROLE= data.role;
 
+                if($scope.USER_ROLE && $scope.USER_ROLE.indexOf("admin") != -1){
+                    Pusher.subscribe('newLogin', 'login', function (user) {
+                        $.notify({message: "New login: "+ user.name ,title:'Notification',icon:"icon fa fa-info"},{type: 'info'});
+                    });
+                }
+
             }, function (error) {
                 console.log(error);
             });    
         }
-
-        if($scope.USER_ROLE && $scope.USER_ROLE.indexOf("admin") != -1){
-            Pusher.subscribe('newLogin', 'login', function (user) {
-                $.notify({message: "New login: "+ user.name ,title:'Notification',icon:"icon fa fa-info"},{type: 'info'});
-            });
-        }
-        
     }
     else 
         $window.location.href = '/login.html';
