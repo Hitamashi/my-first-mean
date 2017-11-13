@@ -1,0 +1,208 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper" ng-strict-di>
+<!-- Content Header (Page header) -->
+
+
+<section class="content-header">
+    <h1>Demo</h1>
+</section>
+
+<!-- Main content -->
+<section class="content">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Upload</h3>
+            </div>
+            <!-- /.box-header -->
+            <!-- form start -->
+            <form role="form">
+                <div class="box-body">
+
+                <div class="form-group">
+                    <label for="date">Input file</label>
+                    <input id="file" type="file" multiple="false"/>
+                </div>
+
+                <div class="form-group" ng-show="loadingUpload">
+                    <span class="help-block"><i class="fa fa-spinner fa-pulse"></i> Loading </span>
+                </div>
+
+                <div class="form-group has-success" ng-show="!errorUpload && statusUpload">
+                    <span class="help-block"><i class="fa fa-check"></i> {{statusUpload}}</span>
+                </div>
+
+                <div class="form-group has-error" ng-show="errorUpload && statusUpload">
+                    <span class="help-block"><i class="fa fa-bell-o"></i> {{statusUpload}}</span>
+                </div>
+                </div>
+
+                <!-- /.box-body -->
+
+                <div class="box-footer">
+                <button class="btn btn-primary pull-right" ng-click="submitUpload()">Import</button>
+                <button class="btn btn-default" ng-click="resetUpload()">Reset</button>
+                </div>
+            </form>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="box box-primary">
+                <div class="box-header with-border">
+                    <h3 class="box-title">Download</h3>
+                </div>
+            <!-- /.box-header -->
+            <!-- Download static file -->
+                <div class="box-body">
+                    <a class="btn btn-default" href="/api/file/download/demo" title="Download template file"><i class="fa fa-download" aria-hidden="true"></i> Template</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Table</h3>
+                <div class="box-tools">
+                    <div class="input-group col-md-3" style="width:300px">
+                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                        <input type="text" ng-model="search2" class="form-control pull-right" placeholder="Search">
+                    </div>
+                </div>
+            </div>
+            <div class="box-body">
+                <table class="table table-hover">
+                    <tr>
+                        <th ng-click="sort('ID')" style="cursor:pointer">
+                            Id
+                            <span class="fa sort-icon" ng-show="sortKey=='ID'" ng-class="{'fa-angle-up':reverse,'fa-angle-down':!reverse}"></span>
+                        </th>
+                        <th ng-click="sort('Status')" style="cursor:pointer">
+                        Status
+                        <span class="fa sort-icon" ng-show="sortKey=='Status'" ng-class="{'fa-angle-up':reverse,'fa-angle-down':!reverse}"></span>
+                      </th>
+                      <th>Destination</th>
+                      <th>Duration</th>
+                      <th ng-click="sort('CreationDate')" style="cursor:pointer">
+                        Date
+                      <span class="fa sort-icon" ng-show="sortKey=='CreationDate'" ng-class="{'fa-angle-up':reverse,'fa-angle-down':!reverse}"></span>
+                      </th>
+                      <th>Customer</th>
+                      <th>Description</th>
+                      <th>Actions</th>
+                    </tr>
+                    <tr ng-repeat="d in demoData | orderBy:sortKey:reverse | filter:search2"> 
+                        <td>
+                            <a class="label bg-gray" ng-if="d.ID!=0" target="_blank"
+                                ng-href="#">
+                                {{d.ID}}
+                            </a>
+                        </td>
+                        <td><span class="badge" ng-class="colorStatus(d.Status)">{{d.Status}}</span></td>
+                        <td>{{d.Destination}}</td>
+                        <td>
+                            <a class="label bg-green" ng-if="d.Duration!=null" target="_blank"
+                                ng-href="#">
+                                {{d.Duration}} days
+                            </a>
+                        </td>
+                        <td>{{d.CreationDate | date:'short'}}</td>
+                        <td>{{d.Customer}}</td>
+                        <td>{{d.Description}}</td>
+                        <td> 
+                            <div class="tools">
+                                <button class="btn btn-default" ng-click="tableEdit(ID)" data-toggle="tooltip" data-container="body" title="" data-original-title="Edit">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                                <button class="btn btn-default" ng-click="tableRemove(ID)" data-toggle="tooltip" data-container="body" title="" data-original-title="Delete">
+                                    <i class="fa fa-trash-o"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <pre>{{demoData}}</pre>
+            </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Table pagination</h3>
+                <div class="box-tools">
+                    <div class="input-group col-md-3" style="width:300px">
+                        <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                        <input type="text" ng-model="search" class="form-control pull-right" placeholder="Search">
+                    </div>
+                </div>
+            </div>
+            <div class="box-body">
+                <table class="table table-hover">
+                    <tr>
+                        <th ng-click="sort('ID')" style="cursor:pointer">
+                            Id
+                            <span class="fa sort-icon" ng-show="sortKey=='ID'" ng-class="{'fa-angle-up':reverse,'fa-angle-down':!reverse}"></span>
+                        </th>
+                        <th ng-click="sort('Status')" style="cursor:pointer">
+                        Status
+                        <span class="fa sort-icon" ng-show="sortKey=='Status'" ng-class="{'fa-angle-up':reverse,'fa-angle-down':!reverse}"></span>
+                      </th>
+                      <th width=>Destination</th>
+                      <th>Duration</th>
+                      <th ng-click="sort('CreationDate')" style="cursor:pointer">
+                        Date
+                      <span class="fa sort-icon" ng-show="sortKey=='CreationDate'" ng-class="{'fa-angle-up':reverse,'fa-angle-down':!reverse}"></span>
+                      </th>
+                      <th>Customer</th>
+                      <th>Description</th>
+                      <th>Actions</th>
+                    </tr>
+                    <tr dir-paginate="d in demoData | orderBy:sortKey:reverse | filter:search | itemsPerPage: 5"> 
+                        <td>
+                            <a class="label bg-gray" ng-if="d.ID!=0" target="_blank"
+                                ng-href="#">
+                                {{d.ID}}
+                            </a>
+                        </td>
+                        <td><span class="badge" ng-class="colorStatus(d.Status)">{{d.Status}}</span></td>
+                        <td>{{d.Destination}}</td>
+                        <td>
+                            <a class="label bg-green" ng-if="d.Duration!=null" target="_blank"
+                                ng-href="#">
+                                {{d.Duration}} days
+                            </a>
+                        </td>
+                        <td>{{d.CreationDate | date:'short'}}</td>
+                        <td>{{d.Customer}}</td>
+                        <td>{{d.Description}}</td>
+                        <td> 
+                            <div class="tools">
+                                <button class="btn btn-default" ng-click="tableEdit(ID)" data-toggle="tooltip" data-container="body" title="" data-original-title="Edit">
+                                    <i class="fa fa-edit"></i>
+                                </button>
+                                <button class="btn btn-default" ng-click="tableRemove(ID)" data-toggle="tooltip" data-container="body" title="" data-original-title="Delete">
+                                    <i class="fa fa-trash-o"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+                <dir-pagination-controls boundary-links="true" direction-links="true" max-size="4" template-url="/Scripts/Directives/dirPagination.tpl.html"></dir-pagination-controls>
+                <pre>{{demoData}}</pre>
+            </div>
+            </div>
+        </div>
+    </div>
+    <!--- End Test--->
+    <div >
+                
+    </div>
+</section><!-- /.content -->
+
+<!-- End dialog modal template -->
+</div><!-- /.content-wrapper -->

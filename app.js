@@ -10,6 +10,9 @@ app.get('/api', function (req, res) {
   res.status(200).send('API works.');
 });
 
+var FileController = require(__root + 'api/file/FileRoutes');
+app.use('/api/file', FileController);
+
 var UserController = require(__root + 'api/user/UserRoutes');
 app.use('/api/users', UserController);
 

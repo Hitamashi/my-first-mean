@@ -386,3 +386,80 @@ function ($scope, $rootScope, $filter, $interval, $timeout, $cookies, DataServic
     }
 
 } ]);
+
+app.controller('DemoCtrl', ['$scope', '$rootScope', '$filter', '$interval', '$timeout', '$window', '$cookies', 'DataService',
+function ($scope, $rootScope, $filter, $interval, $timeout,$window, $cookies, DataService) {
+    $scope.isDebug = false;
+    $scope.holiday = {};
+    $scope.loading = false;
+    
+
+    // Upload - Download
+    $scope.excelData = { loading: false, done: true, data: [] };
+
+    $scope.resetUpload = function () {
+        $scope.statusUpload = null;
+    }
+
+    $scope.submitUpload = function () {
+        $scope.loadingUpload = true;
+        $scope.loadingUpload = false;
+    }
+
+
+    //Table demo
+
+    $scope.demoData=[{"ID":1,"Destination":"El Salvador","Status":"On going","Duration":2,"CreationDate":"2017-11-12T09:23:05.762","Customer":"Netagy","Description":"Ipsum pariatur quis exercitation dolore sunt dolor adipisicing."},{"ID":2,"Destination":"Libya","Status":"Critical","Duration":3,"CreationDate":"2017-11-13T10:42:53.727","Customer":"Zolar","Description":"Aliquip commodo Lorem tempor culpa magna Lorem elit culpa."},{"ID":3,"Destination":"Mayotte","Status":"Urgent","Duration":3,"CreationDate":"2017-11-10T22:45:45.664","Customer":"Gluid","Description":"Eu laborum quis labore non sunt nisi aliqua minim mollit consequat aliquip nostrud."},{"ID":4,"Destination":"Greece","Status":"Done","Duration":5,"CreationDate":"2017-11-12T11:01:22.983","Customer":"Gadtron","Description":"Irure nisi nostrud sint nostrud eiusmod deserunt."},{"ID":5,"Destination":"Pitcairn","Status":"Urgent","Duration":2,"CreationDate":"2017-11-11T15:13:05.911","Customer":"Memora","Description":"Consectetur proident dolore ea tempor eu consectetur quis consectetur est veniam aute occaecat."},{"ID":6,"Destination":"China","Status":"Done","Duration":4,"CreationDate":"2017-11-10T23:18:03.561","Customer":"Autograte","Description":"Eiusmod non occaecat nostrud anim dolor."},{"ID":7,"Destination":"Andorra","Status":"Urgent","Duration":4,"CreationDate":"2017-11-10T07:34:39.492","Customer":"Shopabout","Description":"Laborum duis fugiat ipsum minim do est qui dolore aliqua."}];
+
+    $scope.colorStatus = function (val) {
+        switch (val) {
+            case 'Critical':
+                return 'bg-red';
+            case 'Urgent':
+                return 'bg-orange';
+            case 'On going':
+                return 'bg-purple';
+            case 'Done':
+                return 'bg-blue';
+            default:
+                return '';
+        }
+    }
+
+    $scope.sort = function (keyname) {
+        if ($scope.sortKey != keyname) {
+            $scope.reverse = false;
+        }
+        else {
+            $scope.reverse = !$scope.reverse;
+        }
+        $scope.sortKey = keyname;   //set the sortKey to the param passed
+    }
+
+    $scope.tableEdit = function(){
+        $window.swal(
+            'Modified!',
+            'Your item has been edited',
+            'success'
+        )
+    };
+
+    $scope.tableRemove = function(){
+        $window.swal({
+            title: 'Remove item',
+            text: "You really want to remove this item?",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes'
+        }).then(function () {
+            $window.swal(
+                'Deleted!',
+                'Your item has been deleted.',
+                'success'
+            )
+        });
+    };    
+
+} ]);
