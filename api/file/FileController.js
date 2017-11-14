@@ -1,11 +1,16 @@
 var express = require('express');
 var path = require('path');
+var formidable = require('formidable');
+var fs = require('fs');
 
 var File = require('./File');
 
+var uploadDir = path.join(__root,'upload');
+
+//Demo download
 exports.demoDownload = function(req, res) {
     console.log("Into download");
-    res.download(path.join(__root,'upload', 'demo.txt'),'demo.txt', function(err){
+    res.download(path.join(uploadDir, 'demo.txt'),'demo.txt', function(err){
         if(err){
             res.status(500).send("Cannot download the demo file");
         }
@@ -13,7 +18,45 @@ exports.demoDownload = function(req, res) {
             console.log("File downloaded!");
         }
     });
-}
+};
+
+//Upload
+exports.uploadFile = function(req, res) {
+    var form = new formidable.IncomingForm();
+
+    form.multiples= false;
+
+    form.parse(req, function (err, fields, files) {
+        console.log("Parse form");
+        if(err) {
+            console.log(err);
+            return res.status(500).send("Cannot upload file");
+        }
+
+        var oldpath = files.filetoupload.path;
+        var filename = files.filetoupload.name;
+
+        //Update in DB
+        File.create({name : filename, path: uploadDir},
+        function (err, file) {
+            if (err) 
+                return res.status(500).send("There was a problem adding the information to the database.");
+            else {
+                //res.status(200).send("File uploaded");
+                var newpath = file.fullPath;
+                
+                fs.rename(oldpath, newpath, function (err) {
+                    if (err) {
+                        console.log(err);
+                        return res.status(500).send("Cannot upload file");
+                    }
+                    res.status(200).send({status:"Success", file: file});
+
+                });
+            }
+        });
+    });
+};
 
 // CREATES A NEW USER
 exports.createFile = function (req, res) {
