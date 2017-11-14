@@ -20,7 +20,7 @@ var AuthController = require(__root + 'api/auth/AuthController');
 app.use('/api/auth', AuthController);
 
 app.use(function(req, res) {
-  res.status(404).send({url: req.originalUrl + ' not found'})
+  res.status(404).send({url: req.originalUrl + ' not found'});
 });
 
 module.exports = app;
