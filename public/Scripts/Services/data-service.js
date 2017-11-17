@@ -1,32 +1,36 @@
 ﻿app.factory('DataService', ["$http", "$q", "$filter", function ($http, $q, $filter) {
 
+    function sendRequest(options){
+        return $http(options)
+        .then(function (response) {
+            if (typeof response.data === 'object') {
+                return response.data;
+            } else {
+                // invalid response
+                return $q.reject(response.data);
+            }
+
+        }, function (response) {
+            // something went wrong
+            return $q.reject(response.data);
+        });
+    }
+
     function getmyIP() {
         var url = 'https://api.ipify.org/?format=json';
 
-        return $http({
+        return sendRequest({
             url: url,
             method: "GET",
             headers: {
                 "Content-Type": "application/json"
             }
         })
-        .then(function (response) {
-            if (typeof response.data === 'object') {
-                return response.data;
-            } else {
-                // invalid response
-                return $q.reject(response.data);
-            }
-
-        }, function (response) {
-            // something went wrong
-            return $q.reject(response.data);
-        });
-
     }
+
     function createClaim(params) {
         var url = '/api/data/createClaim/';
-        return $http({
+        return sendRequest({
             url: url,
             method: "POST",
             data: params,
@@ -34,23 +38,11 @@
                 "Content-Type": "application/json"
             }
         })
-        .then(function (response) {
-            if (typeof response.data === 'object') {
-                return response.data;
-            } else {
-                // invalid response
-                return $q.reject(response.data);
-            }
-
-        }, function (response) {
-            // something went wrong
-            return $q.reject(response.data);
-        });
     };
 
     function createLeave(params) {
         var url = '/api/data/createLeave/';
-        return $http({
+        return sendRequest({
             url: url,
             method: "POST",
             data: params,
@@ -58,23 +50,11 @@
                 "Content-Type": "application/json"
             }
         })
-        .then(function (response) {
-            if (typeof response.data === 'object') {
-                return response.data;
-            } else {
-                // invalid response
-                return $q.reject(response.data);
-            }
-
-        }, function (response) {
-            // something went wrong
-            return $q.reject(response.data);
-        });
     };
 
     function createTimesheet(params) {
         var url = '/api/data/createTimesheet/';
-        return $http({
+        return sendRequest({
             url: url,
             method: "POST",
             data: params,
@@ -82,94 +62,46 @@
                 "Content-Type": "application/json"
             }
         })
-        .then(function (response) {
-            if (typeof response.data === 'object') {
-                return response.data;
-            } else {
-                // invalid response
-                return $q.reject(response.data);
-            }
-
-        }, function (response) {
-            // something went wrong
-            return $q.reject(response.data);
-        });
     };
 
     function editPersonBalance(params) {
         var url = '/api/data/editPersonBalance/';
-        return $http({
+        return sendRequest({
             url: url,
             method: "POST",
             data: params,
             headers: {
                 "Content-Type": "application/json"
             }
-        })
-        .then(function (response) {
-            if (typeof response.data === 'object') {
-                return response.data;
-            } else {
-                // invalid response
-                return $q.reject(response.data);
-            }
-
-        }, function (response) {
-            // something went wrong
-            return $q.reject(response.data);
         });
     }
 
     function getListPerson() {
         var url = '/api/data/getListPerson/';
-        return $http({
+        return sendRequest({
             url: url,
             method: "GET",
             headers: {
                 "Content-Type": "application/json"
             }
-        })
-        .then(function (response) {
-            if (typeof response.data === 'object') {
-                return response.data;
-            } else {
-                // invalid response
-                return $q.reject(response.data);
-            }
-
-        }, function (response) {
-            // something went wrong
-            return $q.reject(response.data);
         });
     }
 
     function createHoliday(params) {
         var url = '/api/data/createHoliday/';
-        return $http({
+        return sendRequest({
             url: url,
             method: "POST",
             data: params,
             headers: {
                 "Content-Type": "application/json"
             }
-        })
-        .then(function (response) {
-            if (typeof response.data === 'object') {
-                return response.data;
-            } else {
-                // invalid response
-                return $q.reject(response.data);
-            }
-
-        }, function (response) {
-            // something went wrong
-            return $q.reject(response.data);
         });
     };
 
     function importHoliday(params) {
         var url = '/api/data/importHoliday/';
-        return $http({
+        return sendRequest({
             url: url,
             method: "POST",
             data: params,
@@ -177,18 +109,6 @@
                 "Content-Type": "application/json"
             }
         })
-        .then(function (response) {
-            if (typeof response.data === 'object') {
-                return response.data;
-            } else {
-                // invalid response
-                return $q.reject(response.data);
-            }
-
-        }, function (response) {
-            // something went wrong
-            return $q.reject(response.data);
-        });
     };
 
     return {
