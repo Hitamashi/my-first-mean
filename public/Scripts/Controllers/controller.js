@@ -387,8 +387,8 @@ function ($scope, $rootScope, $filter, $interval, $timeout, $cookies, DataServic
 
 } ]);
 
-app.controller('DemoCtrl', ['$scope', '$rootScope', '$filter', '$interval', '$timeout', '$window', '$cookies', 'DataService',
-function ($scope, $rootScope, $filter, $interval, $timeout,$window, $cookies, DataService) {
+app.controller('DemoCtrl', ['$scope', '$rootScope', '$filter', '$interval', '$timeout', '$window', '$cookies', 'Upload', 'DataService',
+function ($scope, $rootScope, $filter, $interval, $timeout,$window, $cookies, Upload, DataService) {
     $scope.isDebug = false;
     $scope.holiday = {};
     $scope.loading = false;
@@ -401,9 +401,34 @@ function ($scope, $rootScope, $filter, $interval, $timeout,$window, $cookies, Da
         $scope.statusUpload = null;
     }
 
+    $scope.myFileModel =null;
+
     $scope.submitUpload = function () {
+        var file = $scope.myFileModel;
+        file.progress = 0;
         $scope.loadingUpload = true;
-        $scope.loadingUpload = false;
+
+        console.log(file);
+
+        Upload.upload({
+          url: '/api/file/upload',
+          data: {file: file},
+        })
+        .then(function (response) {
+            file.result = response.data;
+            $.notify({message: "File uploaded: "+ response.data.file.name ,title:'Success',icon:"icon fa fa-check-circle"},{type: 'success'});
+            $scope.loadingUpload = false;
+        }, function (response) {
+            if (response.status > 0){
+                $scope.statusUpload = response.status + ': ' + response.data;
+                $.notify({message: "File uploaded failed! ",title:'Error',icon:"icon fa fa-times-circle"},{type: 'danger'});
+            }
+            $scope.loadingUpload = false;
+        }, function (evt) {
+            // Math.min is to fix IE which reports 200% sometimes
+            file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+            console.log('progress: ' + evt.loaded +'/'+evt.total + '% ' + evt.config.data.file.name);
+        });
     }
 
 

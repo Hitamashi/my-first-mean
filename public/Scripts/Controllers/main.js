@@ -1,4 +1,4 @@
-﻿var app = angular.module('appSentinel', ['ui.bootstrap', 'ngAnimate', 'ngSanitize', 'ui.select','angularUtils.directives.dirPagination', 'ngCookies', 'ngRoute','doowb.angular-pusher']);
+﻿var app = angular.module('appSentinel', ['ui.bootstrap', 'ngAnimate', 'ngSanitize', 'ui.select','angularUtils.directives.dirPagination', 'ngCookies', 'ngRoute','doowb.angular-pusher','ngFileUpload']);
 
 app.config(function ($routeProvider) {
     $routeProvider

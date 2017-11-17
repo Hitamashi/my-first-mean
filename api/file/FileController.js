@@ -33,8 +33,12 @@ exports.uploadFile = function(req, res) {
             return res.status(500).send("Cannot upload file");
         }
 
-        var oldpath = files.filetoupload.path;
-        var filename = files.filetoupload.name;
+        console.log(files);
+        var myfile = files["file[0]"];
+
+        var oldpath = myfile.path;
+        var filename = myfile.name;
+        var type = myfile.type;
 
         //Update in DB
         File.create({name : filename, path: uploadDir},
@@ -79,8 +83,8 @@ exports.createFile = function (req, res) {
 
 // GETS A SINGLE USER FROM THE DATABASE
 exports.getOneFile = function (req, res) {
-    User.findById(req.params.id,{path:0}, function (err, file) {
-        if (err) return res.status(500).send("There was a problem finding the user.");
+    File.findById(req.params.id,{path:0}, function (err, file) {
+        if (err) return res.status(500).send("There was a problem finding the file.");
         if (!file) return res.status(404).send("No file found.");
             res.status(200).send(file);
     });
@@ -88,8 +92,8 @@ exports.getOneFile = function (req, res) {
 
 // DELETES A USER FROM THE DATABASE
 exports.removeFile = function (req, res) {
-    User.findByIdAndRemove(req.params.id, function (err, file) {
-        if (err) return res.status(500).send("There was a problem deleting the user.");
+    File.findByIdAndRemove(req.params.id, function (err, file) {
+        if (err) return res.status(500).send("There was a problem deleting the file.");
         res.status(200).send("File: "+ file.name +" was deleted.");
     });
 };
@@ -98,7 +102,7 @@ exports.removeFile = function (req, res) {
 // Added VerifyToken middleware to make sure only an authenticated user can put to this route
 exports.updateFile = function (req, res) {
     req.body.modifiedDate = new Date();
-    User.findByIdAndUpdate(req.params.id, req.body, {new: true}, function (err, user) {
+    File.findByIdAndUpdate(req.params.id, req.body, {new: true}, function (err, file) {
         if (err) return res.status(500).send("There was a problem updating the user.");
         res.status(200).send(user);
     });

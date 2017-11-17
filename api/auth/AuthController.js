@@ -18,7 +18,7 @@ var config = require(__root + '/config.js' ); // get config file
 var pusher = require(__root + '/Pusher.js' );
 
 router.post('/login', function(req, res) {
-
+  console.log("Start login:" + req.body.email);
   User.findOne({ email: req.body.email }, function (err, user) {
     if (err) return res.status(500).send('Error on the server.');
     if (!user) return res.status(200).send({ auth: false, token: null });
