@@ -4,31 +4,18 @@ var User = require('./User');
 
 // CREATES A NEW USER
 exports.createUser = function (req, res) {
-
     //Check exist
-    User.find({ 
-            'name': req.body.name,
-            'email':req.body.email 
-        }, 
+    User.find({ 'email':req.body.email}, 
         function(err, user) {
-
             if (err) {
-
                 console.log('Signup error');
                 return done(err);
             }
 
             //if user found.
             if (user.length!=0) {
-                if(user[0].name){
-                    console.log('Username already exists, username: ' + req.body.name);
-                    return res.status(400).send("User already exists");                         
-                }
-                else {
-                    console.log('EMAIL already exists, email: ' + req.body.email);
-                    return res.status(400).send("Email already exists");
-                }                                    
-                
+                console.log('EMAIL already exists, email: ' + req.body.email);
+                return res.status(400).send("Email already exists");                                             
             }
             else {
                 //Create
@@ -36,11 +23,10 @@ exports.createUser = function (req, res) {
                         name : req.body.name,
                         email : req.body.email,
                         password : req.body.password
-                    }, 
-                    function (err, user) {
-                        if (err) return res.status(500).send("There was a problem adding the information to the database.");
-                        res.status(200).send(user);
-                    });
+                }, function (err, user) {
+                    if (err) return res.status(500).send("There was a problem adding the information to the database.");
+                    res.status(200).send(user);
+                });
             }
         });
 };

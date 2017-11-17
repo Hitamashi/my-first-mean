@@ -27,7 +27,6 @@ exports.uploadFile = function(req, res) {
     form.multiples= false;
 
     form.parse(req, function (err, fields, files) {
-        console.log("Parse form");
         if(err) {
             console.log(err);
             return res.status(500).send("Cannot upload file");
@@ -55,7 +54,6 @@ exports.uploadFile = function(req, res) {
                         return res.status(500).send("Cannot upload file");
                     }
                     res.status(200).send({status:"Success", file: file});
-
                 });
             }
         });
