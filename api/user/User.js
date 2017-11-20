@@ -4,7 +4,7 @@ var UserSchema = new mongoose.Schema({
   	email: String,
   	password: String,
   	team: String,
-  	role: {
+  	roles: {
   		type: [ { type: String, enum: ["admin", "sales" , "creator", "accountant", "basic"] } ],
     	required: true,
     	default: "basic"

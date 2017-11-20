@@ -23,12 +23,12 @@
                 $cookies.put("HM_USER_ID", data._id);
                 $cookies.put("HM_USER_NAME", data.name);
                 $cookies.put("HM_USER_EMAIL", data.email);
-                $cookies.put("HM_USER_ROLE", JSON.stringify(data.role));
+                $cookies.put("HM_USER_ROLE", JSON.stringify(data.roles));
             
                 $scope.USER_ID= data.id;
                 $scope.USER_NAME= data.name;
                 $scope.USER_EMAIL= data.email;
-                $scope.USER_ROLE= data.role;
+                $scope.USER_ROLE= data.roles;
 
                 if($scope.USER_ROLE && $scope.USER_ROLE.indexOf("admin") != -1){
                     Pusher.subscribe('newLogin', 'login', function (user) {
@@ -43,12 +43,6 @@
     }
     else 
         $window.location.href = '/login.html';
-
-    DataService.getmyIP().then(function (data) {
-        $.notify({message: data.ip,title:'My IP',icon:"icon fa fa-info"},{type: 'info'});
-    }, function (error) {
-        console.log(error);
-    });
 
     $scope.logout = function(){
         $window.swal({
@@ -74,120 +68,6 @@
     }
 
 }]);
-
-app.controller('ClaimCtrl', ['$scope', '$rootScope', '$filter', '$interval', '$timeout', '$cookies', 'DataService',
-function ($scope, $rootScope, $filter, $interval, $timeout, $cookies, DataService) {
-    $scope.isDebug = false;
-    $scope.claim = {amount:0,ims_ticket:'N/A',notes:''};
-    
-    $scope.loading = false;
-
-    DataService.getmyIP().then(function (data) {
-        $scope.claim["Submitted From"] = data.ip;
-    }, function (error) {
-        console.log(error);
-    });
-
-    $scope.submitClaim = function () {
-        $scope.loading = true;
-        var params = angular.copy($scope.claim);
-
-        if (!params.Name || params.Name == "" || !params.Claim_date || !params.types_of_claim) {
-            $scope.status = "Missing field: " + ((!params.Name || params.Name == "") ? "- Username " : "") + ((!params.Claim_date) ? "- Date " : "") + ((!params.types_of_claim) ? "- Claim Code" : "");
-            $scope.error = true;
-            $scope.loading = false;
-            return;
-        }
-
-        params.Submitted = $filter('date')(new Date(), "yyyy-MM-dd hh:mm:ss");
-        params.Claim_date = $filter('date')(params.Claim_date, "yyyy-MM-dd");
-
-
-        //alert(params);
-        if (!params.ims_ticket || params.ims_ticket=='')
-            params.ims_ticket = 'N/A';
-
-        DataService.createClaim(params)
-        .then(function (data) {
-            if (data.error) {
-                $scope.status = "Error!";
-                $scope.error = true;
-            }
-            else {
-                $scope.status = "Claim created successfully";
-                $scope.error = false;
-            }
-            $scope.loading = false;
-        }, function (error) {
-            console.log(error);
-            $scope.status = "Error!";
-            $scope.error = true;
-            $scope.loading = false;
-        });
-    }
-
-    $scope.resetClaim = function () {
-        $scope.claim = {};
-        $scope.status = null;
-    }
-
-} ]);
-
-app.controller('LeaveCtrl', ['$scope', '$rootScope', '$filter', '$interval', '$timeout', '$cookies', 'DataService',
-function ($scope, $rootScope, $filter, $interval, $timeout, $cookies, DataService) {
-    $scope.isDebug = false;
-    $scope.leave = {notes:''};
-    $scope.loading = false;
-
-    DataService.getmyIP().then(function (data) {
-        $scope.leave["Submitted From"] = data.ip;
-    }, function (error) {
-        console.log(error);
-    });
-
-    $scope.submit = function () {
-        $scope.loading = true;
-
-        var params = angular.copy($scope.leave);
-
-        //alert(params);
-        if (!params.Name || params.Name == "" || !params.start_date || !params.leave_ims || !params.end_date || !params.day) {
-            $scope.status = "Missing field";
-            $scope.error = true;
-            $scope.loading = false;
-            return;
-        }
-
-        params.Submitted = $filter('date')(new Date(), "yyyy-MM-dd hh:mm:ss");
-        params.start_date = $filter('date')(params.start_date, "yyyy-MM-dd");
-        params.end_date = $filter('date')(params.end_date, "yyyy-MM-dd");
-		
-        DataService.createLeave(params)
-        .then(function (data) {
-            if (data.error) {
-                $scope.status = "Error!";
-                $scope.error = true;
-            }
-            else {
-                $scope.status = "Leave created successfully";
-                $scope.error = false;
-            }
-            $scope.loading = false;
-        }, function (error) {
-            console.log(error);
-            $scope.status = "Error!";
-            $scope.error = true;
-            $scope.loading = false;
-        });
-    }
-
-    $scope.reset = function () {
-        $scope.leave = {};
-        $scope.status = null;
-    }
-
-} ]);
-
 
 app.controller('TSCtrl', ['$scope', '$rootScope', '$filter', '$interval', '$timeout', '$cookies', 'DataService',
 function ($scope, $rootScope, $filter, $interval, $timeout, $cookies, DataService) {
@@ -387,12 +267,19 @@ function ($scope, $rootScope, $filter, $interval, $timeout, $cookies, DataServic
 
 } ]);
 
-app.controller('DemoCtrl', ['$scope', '$rootScope', '$filter', '$interval', '$timeout', '$window', '$cookies', 'Upload', 'DataService',
-function ($scope, $rootScope, $filter, $interval, $timeout,$window, $cookies, Upload, DataService) {
+app.controller('DemoCtrl', ['$scope', '$rootScope', '$filter', '$interval', '$timeout', '$window', '$cookies', 'Upload', 'DataService', 'userProfile',
+function ($scope, $rootScope, $filter, $interval, $timeout,$window, $cookies, Upload, DataService, userProfile) {
     $scope.isDebug = false;
     $scope.holiday = {};
     $scope.loading = false;
     
+    $scope.myProfile = userProfile.$getProfile();
+    /*
+    userProfile.$getProfile().then(function(data){
+        console.log(data);
+        $scope.myProfile = data;
+    });
+    */
 
     // Upload - Download
     $scope.excelData = { loading: false, done: true, data: [] };
@@ -485,6 +372,29 @@ function ($scope, $rootScope, $filter, $interval, $timeout,$window, $cookies, Up
                 'success'
             )
         });
-    };    
+    }; 
+
+    $scope.notification = {
+        info: function(){
+            $.notify({message: 'Info message', title: 'Info', icon:"icon fa fa-info"},{type: 'info'});
+        },
+        success: function(){
+            $.notify({message: "Success message" ,title:'Success',icon:"icon fa fa-check-circle"},{type: 'success'});
+        },
+        warning: function(){
+            $.notify({message: "Warning message" , title:'Warning', icon:"icon fa fa-warning"},{type: 'warning'});
+        },
+        error: function(){
+            $.notify({message: "Error message" , title:'Error',icon:"icon fa fa-times-circle"},{type: 'danger'});
+        },
+        ajax: function(){
+            DataService.getmyIP().then(function (data) {
+                $.notify({message: data.ip,title:'My IP',icon:"icon fa fa-info"},{type: 'info'});
+            }, function (error) {
+                console.log(error);
+            });
+        }
+
+    }   
 
 } ]);

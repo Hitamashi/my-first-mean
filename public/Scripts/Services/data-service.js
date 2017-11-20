@@ -28,30 +28,6 @@
         })
     }
 
-    function createClaim(params) {
-        var url = '/api/data/createClaim/';
-        return sendRequest({
-            url: url,
-            method: "POST",
-            data: params,
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-    };
-
-    function createLeave(params) {
-        var url = '/api/data/createLeave/';
-        return sendRequest({
-            url: url,
-            method: "POST",
-            data: params,
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
-    };
-
     function createTimesheet(params) {
         var url = '/api/data/createTimesheet/';
         return sendRequest({
@@ -113,8 +89,6 @@
 
     return {
         getmyIP: getmyIP,
-        createClaim: createClaim,
-        createLeave: createLeave,
         createTimesheet: createTimesheet,
         editPersonBalance: editPersonBalance,
         getListPerson: getListPerson,
