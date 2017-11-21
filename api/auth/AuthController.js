@@ -36,12 +36,13 @@ router.post('/login', function(req, res) {
     pusher.trigger('newLogin', 'login', user);
 
     // return the information including token as JSON
-    res.status(200).send({ auth: true, token: token});
+    res.status(200).cookie('HM_ID', token, {httpOnly:true, sameSite: true}).send({ auth: true});
   });
 
 });
 
 router.get('/logout', function(req, res) {
+  res.clearCookie('HM_ID');
   res.status(200).send({ auth: false, token: null });
 });
 

@@ -4,7 +4,10 @@ var config = require(__root + '/config.js' ); // get our config file
 function verifyToken(req, res, next) {
 
   // check header or url parameters or post parameters for token
-  var token = req.headers['x-access-token'];
+  //var token = req.headers['x-access-token'];
+  //console.log(req.cookies);
+  var token = req.cookies.HM_ID? req.cookies.HM_ID : null;
+
   if (!token) 
     return res.status(403).send({ auth: false, message: 'No token provided.' });
 

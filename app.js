@@ -3,6 +3,9 @@ var app = express();
 var db = require('./db');
 global.__root   = __dirname + '/'; 
 
+var cookieParser = require('cookie-parser');
+app.use(cookieParser());
+
 
 app.use(express.static('./public'));
 

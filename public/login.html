@@ -50,13 +50,6 @@
 </body>
 
 <script>
-	function setCookie(cname, cvalue, exdays) {
-	    var d = new Date();
-	    d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
-	    var expires = "expires="+d.toUTCString();
-	    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-	}
-
 	function getCookie(cname) {
 	    var name = cname + "=";
 	    var ca = document.cookie.split(';');
@@ -71,7 +64,7 @@
 	    }
 	    return "";
 	}
-
+	
 	function checkCookie() {
 	    var user = decodeURIComponent(getCookie("HM_USER_NAME"));
 	    if (user != "") {
@@ -102,7 +95,6 @@
 				window.setTimeout(function(){
 					window.location.href="/";
 				}, 1000);
-				setCookie("HM_ID", data.token);
 			}
 			else{
 				$.notify(

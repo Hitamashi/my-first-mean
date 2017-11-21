@@ -63,7 +63,7 @@ app
 
 }])
 
-.factory("UserProfile", ["AuthService", '$cookies', '$http', function (Auth,$cookies, $http) {
+.factory("UserProfile", ['$cookies', '$http', function ($cookies, $http) {
 
   var userProfile = {};
 
@@ -76,14 +76,8 @@ app
   };
 
   var fetchUserProfile = function () {
-    return $http({
-        url: "/api/auth/me",
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-            "x-access-token": $cookies.get("HM_ID")
-        }
-    }).then(function (response) {
+    return $http.get("api/auth/me")
+      .then(function (response) {
         clearUserProfile();
         //console.log(response);
         return angular.extend(userProfile, response.data, {

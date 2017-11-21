@@ -1,6 +1,14 @@
 ﻿app.factory('DataService', ["$http", "$q", "$filter", function ($http, $q, $filter) {
 
-    function sendRequest(options){
+    function sendRequest(method, url, options={}){
+        options.url = url;
+        options.method = method;
+
+        if(!options.headers)
+            options.headers={};
+
+        options.headers["Content-Type"] = "application/json";
+
         return $http(options)
         .then(function (response) {
             if (typeof response.data === 'object') {
@@ -17,82 +25,40 @@
     }
 
     function getmyIP() {
-        var url = 'https://api.ipify.org/?format=json';
-
-        return sendRequest({
-            url: url,
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
+        return sendRequest("GET", 'https://api.ipify.org/?format=json');
     }
 
     function createTimesheet(params) {
         var url = '/api/data/createTimesheet/';
-        return sendRequest({
-            url: url,
-            method: "POST",
-            data: params,
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
+        return sendRequest("POST", url, {data: params});
     };
 
     function editPersonBalance(params) {
         var url = '/api/data/editPersonBalance/';
-        return sendRequest({
-            url: url,
-            method: "POST",
-            data: params,
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
+        return sendRequest("POST", url, {data: params});
     }
 
     function getListPerson() {
-        var url = '/api/data/getListPerson/';
-        return sendRequest({
-            url: url,
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
+        return sendRequest("GET", '/api/data/getListPerson/');
     }
 
     function createHoliday(params) {
         var url = '/api/data/createHoliday/';
-        return sendRequest({
-            url: url,
-            method: "POST",
-            data: params,
-            headers: {
-                "Content-Type": "application/json"
-            }
-        });
+        return sendRequest("POST", url, {data: params});
     };
 
     function importHoliday(params) {
         var url = '/api/data/importHoliday/';
-        return sendRequest({
-            url: url,
-            method: "POST",
-            data: params,
-            headers: {
-                "Content-Type": "application/json"
-            }
-        })
+        return sendRequest("POST", url, {data: params});
     };
 
     return {
+        sendRequest: sendRequest,
         getmyIP: getmyIP,
         createTimesheet: createTimesheet,
         editPersonBalance: editPersonBalance,
         getListPerson: getListPerson,
         createHoliday: createHoliday,
-        importHoliday: importHoliday
+        importHoliday: importHoliday,
     };
 } ]);
