@@ -90,7 +90,7 @@ exports.downloadFile = function(req,res){
             }
         });
     });
-}
+};
 
 //LIST ALL FILES
 exports.getListFile = function(req,res) {
@@ -98,7 +98,7 @@ exports.getListFile = function(req,res) {
         if (err) return res.status(500).send("There was a problem finding the files.");
         res.status(200).send(files);
     });
-}
+};
 
 // GETS A SINGLE USER FROM THE DATABASE
 exports.getOneFile = function (req, res) {
