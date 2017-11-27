@@ -74,6 +74,32 @@ exports.createFile = function (req, res) {
     });
 };
 
+//DOWNLOAD A FILE
+exports.downloadFile = function(req,res){
+    File.findById(req.params.id, function (err, file) {
+        if (err) return res.status(500).send("There was a problem finding the file.");
+        if (!file) return res.status(404).send("No file found.");
+        
+        res.download(file.fullPath, file.name, function(err){
+            if(err){
+                console.log(err);
+                res.status(500).send("Cannot download file: ");
+            }
+            else{
+                console.log("File downloaded: '" + file.name + "' with id " + file.id);
+            }
+        });
+    });
+}
+
+//LIST ALL FILES
+exports.getListFile = function(req,res) {
+    File.find({}, function (err, files) {
+        if (err) return res.status(500).send("There was a problem finding the files.");
+        res.status(200).send(files);
+    });
+}
+
 // GETS A SINGLE USER FROM THE DATABASE
 exports.getOneFile = function (req, res) {
     File.findById(req.params.id,{path:0}, function (err, file) {

@@ -13,6 +13,8 @@ router.use(bodyParser.urlencoded({ extended: true }));
 //router.put('/:id',  VerifyToken, FileCtrl.updateFile);
 
 router.get('/download/demo', FileCtrl.demoDownload);
+router.get('/', FileCtrl.getListFile);
+router.get('/download/:id', FileCtrl.downloadFile);
 router.post('/upload', FileCtrl.uploadFile);
 
 module.exports = router;

@@ -28,6 +28,10 @@
         return sendRequest("GET", 'https://api.ipify.org/?format=json');
     }
 
+    function getListFile() {
+        return sendRequest("GET", '/api/file');
+    }
+
     function createTimesheet(params) {
         var url = '/api/data/createTimesheet/';
         return sendRequest("POST", url, {data: params});
@@ -41,6 +45,7 @@
     function getListPerson() {
         return sendRequest("GET", '/api/data/getListPerson/');
     }
+
 
     function createHoliday(params) {
         var url = '/api/data/createHoliday/';
@@ -60,5 +65,6 @@
         getListPerson: getListPerson,
         createHoliday: createHoliday,
         importHoliday: importHoliday,
+        getListFile: getListFile,
     };
 } ]);

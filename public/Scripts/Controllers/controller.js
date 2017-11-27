@@ -205,6 +205,9 @@ function ($scope, $rootScope, $filter, $interval, $timeout, $window, $cookies, U
         });
     }
 
+    DataService.getListFile().then(function(data){
+        $scope.lstFiles = data;
+    });
 
     //Table demo
 

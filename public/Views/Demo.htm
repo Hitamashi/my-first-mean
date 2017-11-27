@@ -67,6 +67,37 @@
             <!-- Download static file -->
                 <div class="box-body">
                     <a class="btn btn-default" href="/api/file/download/demo" title="Download template file"><i class="fa fa-download" aria-hidden="true"></i> Template</a>
+
+                    <h4>Download from list</h4>
+                    <div class="form-group">
+                    <label for="fileDL">Select file</label>
+                    <select id="fileDL" name="fileDL" class="form-control" ng-model="selFile"
+                            ng-options="p.name for p in lstFiles">
+                    </select>
+                    </div>
+                    <div>
+                    <table class="table table-condensed">
+                        <tbody>
+                            <tr>
+                                <th scope="row">Id</th>
+                                <td>{{selFile._id}}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Name</th>
+                                <td>{{selFile.name}}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Type</th>
+                                <td>{{selFile.type}}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Created date</th>
+                                <td>{{selFile.createdDate | date}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <a class="btn btn-default" ng-href="/api/file/download/{{selFile._id}}" ng-show="selFile" title="Download file"><i class="fa fa-download" aria-hidden="true"></i> Download</a>
+                    </div>
                 </div>
             </div>
         </div>
