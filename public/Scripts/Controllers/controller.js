@@ -190,6 +190,7 @@ function ($scope, $rootScope, $filter, $interval, $timeout, $window, $cookies, U
             file.result = response.data;
             $.notify({message: "File uploaded: "+ response.data.file.name ,title:'Success',icon:"icon fa fa-check-circle"},{type: 'success'});
             $scope.loadingUpload = false;
+            file.progress = 0;
         }, function (response) {
             if (response.status > 0){
                 $scope.statusUpload = response.status + ': ' + response.data;
@@ -199,6 +200,7 @@ function ($scope, $rootScope, $filter, $interval, $timeout, $window, $cookies, U
         }, function (evt) {
             // Math.min is to fix IE which reports 200% sometimes
             file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
+            file.progress = 0;
             console.log('progress: ' + evt.loaded +'/'+evt.total + '% ' + evt.config.data.file.name);
         });
     }

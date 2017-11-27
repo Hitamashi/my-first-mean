@@ -2,6 +2,7 @@ var express = require('express');
 var path = require('path');
 var formidable = require('formidable');
 var fs = require('fs');
+var mv = require('mv');
 
 var File = require('./File');
 
@@ -35,20 +36,14 @@ exports.uploadFile = function(req, res) {
         console.log(files);
         var myfile = files["file[0]"];
 
-        var oldpath = myfile.path;
-        var filename = myfile.name;
-        var type = myfile.type;
-
         //Update in DB
-        File.create({name : filename, path: uploadDir},
+        File.create({name : myfile.name, path: uploadDir, type: myfile.type},
         function (err, file) {
             if (err) 
                 return res.status(500).send("There was a problem adding the information to the database.");
             else {
-                //res.status(200).send("File uploaded");
-                var newpath = file.fullPath;
-                
-                fs.rename(oldpath, newpath, function (err) {
+                //Move file from tmp to uploads                
+                mv(myfile.path, file.fullPath, function (err) {
                     if (err) {
                         console.log(err);
                         return res.status(500).send("Cannot upload file");
@@ -71,7 +66,7 @@ exports.createFile = function (req, res) {
             return res.status(500).send("There was a problem adding the information to the database.");
         else {
             //res.status(200).send("File uploaded");
-            User.findByIdAndUpdate(file.id, {path: path.join(__dirname, "upload", file.id.toString()) }, function (err, user) {
+            File.findByIdAndUpdate(file.id, {path: path.join(__dirname, "upload", file.id.toString()) }, function (err, user) {
                 if (err) return res.status(500).send("There was a problem updating the user.");
                 res.status(200).send(file);
             });

@@ -4,6 +4,7 @@ var p = require('path');
 var FileSchema = new mongoose.Schema({  
   	name: String,
   	path: String,
+  	type: String,
   	createdDate: { type : Date, default: Date.now }
 
 });
