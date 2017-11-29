@@ -1,9 +1,9 @@
-var mongoose = require('mongoose');  
+var mongoose = require("mongoose");  
 var UserRoleSchema = new mongoose.Schema({  
-  	_id: String,
-  	name: String,
-  	description: String
+	_id: String,
+	name: String,
+	description: String
 });
-mongoose.model('UserRole', UserRoleSchema);
+mongoose.model("UserRole", UserRoleSchema);
 
-module.exports = mongoose.model('UserRole');
+module.exports = mongoose.model("UserRole");
