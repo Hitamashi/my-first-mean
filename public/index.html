@@ -52,9 +52,10 @@
     <script src="/Scripts/Directives/importSheetJs.js" type="text/javascript"></script>
     <script src="/Scripts/Directives/dirPagination.js" type="text/javascript"></script>
     <script src="/Scripts/Controllers/controller.js" type="text/javascript"></script>
+    <script src="/Scripts/Controllers/UserCtrl.js" type="text/javascript"></script>
 
   </head>
-  <body class="hold-transition skin-black-light sidebar-collapse sidebar-mini" ng-app="appSentinel" ng-controller="AuthCtrl">
+  <body class="hold-transition skin-black-light sidebar-collapse sidebar-mini" ng-app="appSentinel" ng-controller="MainCtrl">
     <div class="wrapper">
       <!-- Main Header -->
       <header class="main-header">
@@ -79,7 +80,7 @@
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
               <li class="">
-                <a href > Hello <strong>{{USER_NAME}}</strong></a>
+                <a href > Hello <strong>{{HM_USER.name}}</strong></a>
               </li>
               <li class="">
                 <a href ng-click="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
@@ -96,14 +97,9 @@
 
           <!-- Sidebar Menu -->
           <ul class="sidebar-menu">
-                <li>
-                    <a href="#Claim">
-                        <i class="fa fa-file-text-o "></i> <span>Claims</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#Leave">
-                        <i class="fa fa-file-text-o"></i> <span>Leaves</span>
+                <li ng-show="menuAvailable(['superuser', 'director'])">
+                    <a href="#UserManagement">
+                        <i class="fa fa-users"></i> <span>User management</span>
                     </a>
                 </li>
                 <li>

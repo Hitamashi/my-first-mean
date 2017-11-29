@@ -1,10 +1,10 @@
 app.config(function ($routeProvider) {
     $routeProvider
-    .when('/Timesheet',{
-        templateUrl: '/Views/Timesheet.htm',
-        controller: 'TSCtrl',
+    .when('/UserManagement',{
+        templateUrl: '/Views/UserManagement.htm',
+        controller: 'UserCtrl',
         resolve: {
-            access: ["Access", function (Access) { return Access.isAuthenticated(); }],
+            access: ["Access", function (Access) { return Access.hasAnyRole(['superuser','director']); }],
         }
     })
     .when('/Person', {

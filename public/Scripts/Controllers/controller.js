@@ -1,30 +1,32 @@
-﻿app.controller('AuthCtrl', ['$scope', '$rootScope', '$filter', '$cookies', '$window', 'DataService', 'AuthService', 'Pusher'
+﻿app.controller('MainCtrl', ['$scope', '$rootScope', '$filter', '$cookies', '$window', 'DataService', 'AuthService', 'Pusher'
 ,function ($scope, $rootScope, $filter, $cookies, $window, DataService, AuthService, Pusher) {
 
     $scope.ok = false;
 
     AuthService.getProfile().then(function (data) {
-            $cookies.put("HM_USER_ID", data._id);
-            $cookies.put("HM_USER_NAME", data.name);
-            $cookies.put("HM_USER_EMAIL", data.email);
-            $cookies.put("HM_USER_ROLE", JSON.stringify(data.roles));
-        
-            $scope.USER_ID= data.id;
-            $scope.USER_NAME= data.name;
-            $scope.USER_EMAIL= data.email;
-            $scope.USER_ROLE= data.roles;
+        $cookies.put("HM_USER_ID", data._id);
+        $cookies.put("HM_USER_NAME", data.name);
+        $cookies.put("HM_USER_EMAIL", data.email);
+        $cookies.put("HM_USER_ROLE", JSON.stringify(data.roles));
+    
+        $scope.HM_USER = {};
+        $scope.HM_USER.id = data.id;
+        $scope.HM_USER.name= data.name;
+        $scope.HM_USER.email= data.email;
+        $scope.HM_USER.roles= data.roles;
 
-            $scope.ok = true;
-            if($scope.USER_ROLE && $scope.USER_ROLE.indexOf("admin") != -1){
-                Pusher.subscribe('newLogin', 'login', function (user) {
-                    $.notify({message: "New login: "+ user.name ,title:'Notification',icon:"icon fa fa-info"},{type: 'info'});
-                });
-            }
+        $scope.ok = true;
+        if($scope.USER_ROLE && $scope.USER_ROLE.indexOf("admin") != -1){
+            Pusher.subscribe('newLogin', 'login', function (user) {
+                $.notify({message: "New login: "+ user.name ,title:'Notification',icon:"icon fa fa-info"},{type: 'info'});
+            });
+        }
     }, function (error) {
         console.log(error);
         $window.location.href = '/login.html';
     }); 
 
+    //Logout
     $scope.logout = function(){
         $window.swal({
             title: 'Logout',
@@ -52,6 +54,15 @@
                 }
             );
         });
+    }
+
+    //
+    $scope.menuAvailable = function(roles){
+        if(!$scope.HM_USER) return 0;
+
+        return !!$scope.HM_USER.roles.filter(function (role) {
+            return roles.indexOf(role) >= 0;
+        }).length;
     }
 
 }]);

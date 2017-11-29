@@ -1,11 +1,13 @@
-var mongoose = require('mongoose');  
+var mongoose = require('mongoose');
+var UserRole = require('./UserRole');
+
 var UserSchema = new mongoose.Schema({  
   	name: String,
   	email: String,
   	password: String,
   	team: String,
   	roles: {
-  		type: [ { type: String, enum: ["admin", "sales" , "creator", "accountant", "basic"] } ],
+  		type: [ { type: String, ref:'UserRole',} ],
     	required: true,
     	default: "basic"
   	},

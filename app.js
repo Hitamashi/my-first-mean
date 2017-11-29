@@ -4,7 +4,10 @@ var db = require('./db');
 global.__root   = __dirname + '/'; 
 
 var cookieParser = require('cookie-parser');
+var bodyParser = require('body-parser');
+
 app.use(cookieParser());
+app.use(bodyParser.json());
 
 
 app.use(express.static('./public'));
