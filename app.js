@@ -10,7 +10,7 @@ app.use(cookieParser());
 app.use(bodyParser.json());
 
 
-app.use(express.static('./public'));
+app.use(express.static(__dirname +'/public'));
 
 app.get('/api', function (req, res) {
   res.status(200).send('API works.');
