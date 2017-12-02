@@ -13,7 +13,7 @@ function ($http, $q, $filter, $cookies, $window, DataService) {
         $cookies.remove("HM_USER_NAME");
         $cookies.remove("HM_USER_EMAIL");
         $cookies.remove("HM_USER_ROLE");
-        return DataService.sendRequest("GET", "/api/logout");
+        return DataService.sendRequest("GET", "/api/auth/logout");
 	};
 
 	function getProfile(){
