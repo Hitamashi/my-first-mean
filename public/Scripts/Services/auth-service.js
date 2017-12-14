@@ -7,12 +7,16 @@ function ($http, $q, $filter, $cookies, $window, DataService) {
         else return false;
 	};
 
-	function logout(){
-        $cookies.remove("HM_ID");
+	function clearCookie(){
+		$cookies.remove("HM_ID");
 		$cookies.remove("HM_USER_ID");
         $cookies.remove("HM_USER_NAME");
         $cookies.remove("HM_USER_EMAIL");
         $cookies.remove("HM_USER_ROLE");
+	};
+
+	function logout(){
+        clearCookie();
         return DataService.sendRequest("GET", "/api/auth/logout");
 	};
 
@@ -23,7 +27,8 @@ function ($http, $q, $filter, $cookies, $window, DataService) {
 	return {
 		checkAuth : checkAuth,
 		logout : logout,
-		getProfile : getProfile
+		getProfile : getProfile,
+		clearCookie: clearCookie
 	}
 
 }]);

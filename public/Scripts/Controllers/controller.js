@@ -1,5 +1,5 @@
-﻿app.controller('MainCtrl', ['$scope', '$rootScope', '$filter', '$cookies', '$window', 'DataService', 'AuthService', 'Pusher'
-,function ($scope, $rootScope, $filter, $cookies, $window, DataService, AuthService, Pusher) {
+﻿app.controller('MainCtrl', ['$scope', '$rootScope', '$filter', '$cookies', '$window', 'DataService', 'AuthService',
+function ($scope, $rootScope, $filter, $cookies, $window, DataService, AuthService) {
 
     $scope.ok = false;
 
@@ -16,13 +16,9 @@
         $scope.HM_USER.roles= data.roles;
 
         $scope.ok = true;
-        if($scope.USER_ROLE && $scope.USER_ROLE.indexOf("admin") != -1){
-            Pusher.subscribe('newLogin', 'login', function (user) {
-                $.notify({message: "New login: "+ user.name ,title:'Notification',icon:"icon fa fa-info"},{type: 'info'});
-            });
-        }
     }, function (error) {
         console.log(error);
+        AuthService.clearCookie();
         $window.location.href = '/login.html';
     }); 
 

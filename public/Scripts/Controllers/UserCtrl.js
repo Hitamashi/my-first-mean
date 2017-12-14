@@ -1,5 +1,5 @@
-app.controller('UserCtrl', ['$scope', '$rootScope', '$filter', '$cookies', '$window', 'DataService', 'AuthService', 'Pusher'
-,function ($scope, $rootScope, $filter, $cookies, $window, DataService, AuthService, Pusher) {
+app.controller('UserCtrl', ['$scope', '$rootScope', '$filter', '$cookies', '$window', 'DataService', 'AuthService'
+,function ($scope, $rootScope, $filter, $cookies, $window, DataService, AuthService) {
 
     $scope.getListUser = function(){
         DataService.sendRequest("GET", '/api/users')
