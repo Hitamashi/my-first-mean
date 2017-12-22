@@ -1,0 +1,56 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper" ng-strict-di>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Lịch sử {{h.getDisplayName()}}
+        
+        <small> Tour {{h.ticketId}} </small>
+    </h1>
+</section>
+
+<!-- Main content -->
+<section class="content overlay-wrapper">
+    
+    <div class="overlay" ng-show="h.loading" style="position:fixed; display:block; top:0; left:0; width:100%; height: 100%;">
+        <i class="fa fa-refresh fa-spin"></i>
+    </div>
+	<div class="row">
+		<div class='col-md-12'>
+		</div>
+	</div>
+
+    <div ng-show="h.history.length==0">
+        Không tìm thấy dữ liệu lịch sử.
+    </div>
+
+    <div ng-repeat="item in h.history track by $index">
+        <h3>
+            Lần {{$index+1}}
+            <small>{{item.createdDate | date:'dd-MM-yyyy HH:mm'}}</small>
+        </h3>
+        <div ng-show="item.denyReason">
+            <strong>Lý do:</strong><br/>
+            <pre>{{item.denyReason}}</pre>
+        </div>
+        <request-form request="item" ticket="h.ticket" status="h.status" ng-if="h.type=='request'"></request-form>
+
+        <program-form program="item" ticket="h.ticket" status="h.status" ng-if="h.type=='program'"></program-form>
+
+        <info-form info="item" ticket="h.ticket" status="h.status" ng-if="h.type=='info'"></info-form>
+
+        <estimation-form estimation="item" ticket="h.ticket" status="h.status" ng-if="h.type=='estimation'"></estimation-form>
+
+        <contract-admin-form contract="item" ticket="h.ticket" status="h.status" ng-if="h.type=='contract'"></contract-admin-form>
+
+        <contract-acc-form contract="item" ticket="h.ticket" status="h.status" ng-if="h.type=='contract' && item.accountant"></contract-acc-form>
+    </div>
+
+    <!-- End Test-->
+    <div >
+                
+    </div>
+</section><!-- /.content -->
+
+<!-- End dialog modal template -->
+</div><!-- /.content-wrapper -->

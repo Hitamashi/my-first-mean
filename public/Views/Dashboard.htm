@@ -1,0 +1,90 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper" ng-strict-di>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>Dashboard</h1>
+</section>
+
+<!-- Main content -->
+<section class="content overlay-wrapper">
+    <div class="overlay" ng-show="loading" style="position:fixed; display:block; top:0; left:0; width:100%; height: 100%;">
+        <i class="fa fa-refresh fa-spin"></i>
+    </div>
+	<div class="row">
+        <div class="col-md-12">
+            <button class="btn btn-primary" ng-click="newTicket()" ng-show="checkRole()" style="margin-bottom: 10px">
+                <i class="fa fa-plus"></i> Tạo mới
+            </button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <div class="box box-primary">
+            <div class="box-header with-border">
+                <h3 class="box-title">Danh sách</h3>
+                <div class="box-tools">
+                </div>
+            </div>
+            <div class="box-body">
+                <div class="input-group col-md-2" style="margin-bottom: 15px">
+                    <span class="input-group-addon"><i class="fa fa-search"></i></span>
+                    <input type="text" ng-model="search" class="form-control pull-right" placeholder="Search">
+                </div>
+
+                <div style="margin-bottom:15px">
+                    <button ng-click="toggleMyTask()" class="btn btn-default"> {{!onlyMyTask? 'Việc của tôi' : 'Tất cả' }}</button>
+                </div>
+
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <tr>
+                            <th ng-click="sort('_id')" style="cursor:pointer">
+                                Id
+                                <span class="fa sort-icon" ng-show="sortKey=='_id'" ng-class="{'fa-angle-up':reverse,'fa-angle-down':!reverse}"></span>
+                            </th>
+                            <th ng-click="sort('status')" style="cursor:pointer">
+                            Tình trạng
+                            <span class="fa sort-icon" ng-show="sortKey=='status'" ng-class="{'fa-angle-up':reverse,'fa-angle-down':!reverse}"></span>
+                          </th>
+                          <th ng-click="sort('createdDate')" style="cursor:pointer">
+                            Ngày tạo
+                          <span class="fa sort-icon" ng-show="sortKey=='createdDate'" ng-class="{'fa-angle-up':reverse,'fa-angle-down':!reverse}"></span>
+                          </th>
+                          <th ng-click="sort('modifiedDate')" style="cursor:pointer">
+                            Chình sửa cuối
+                          <span class="fa sort-icon" ng-show="sortKey=='modifiedDate'" ng-class="{'fa-angle-up':reverse,'fa-angle-down':!reverse}"></span>
+                          </th>
+                          <th>Khách hàng</th>
+                          <th></th>
+                        </tr>
+                        <tr dir-paginate="d in listTicket | orderBy:sortKey:reverse | filter:search | itemsPerPage: 10">
+                            <td>
+                                <a class="label bg-gray" ng-if="d._id!=0" target="_blank"
+                                    ng-href="#Ticket/{{d._id}}">
+                                    {{d._id}}
+                                </a>
+                            </td>
+                            <td><span class="badge" ng-class="colorStatus(d.status._id)">{{d.status.description}}</span></td>
+                            <td>{{d.createdDate | date:'dd-MM-yyyy HH:mm'}}</td>
+                            <td>{{d.modifiedDate | date:'dd-MM-yyyy HH:mm'}}</td>
+                            <td>{{d.info.companyName}}</td>
+                            <td> 
+                                <div class="tools">
+                                    <a class="btn btn-default" data-toggle="tooltip" title="" data-original-title="Xem" ng-href="#Ticket/{{d._id}}">
+                                        <i class="fa fa-eye"></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <dir-pagination-controls boundary-links="true" direction-links="true" max-size="4" template-url="/Scripts/Directives/dirPagination.tpl.html"></dir-pagination-controls>
+            </div>
+            </div>
+        </div>
+    </div>
+</section><!-- /.content -->
+
+<!-- End dialog modal template -->
+</div><!-- /.content-wrapper -->

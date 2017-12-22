@@ -5,6 +5,6 @@ var TicketStatusSchema = new mongoose.Schema({
   	name: String,
   	description: String,
 });
-mongoose.model("TicketStatus", TicketStatusSchema);
+mongoose.model("TicketState", TicketStatusSchema);
 
-module.exports = mongoose.model("TicketStatus");
+module.exports = mongoose.model("TicketState");

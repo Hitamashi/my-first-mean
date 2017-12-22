@@ -1,7 +1,8 @@
-﻿app.controller('MainCtrl', ['$scope', '$rootScope', '$filter', '$cookies', '$window', 'DataService', 'AuthService',
-function ($scope, $rootScope, $filter, $cookies, $window, DataService, AuthService) {
+app.controller('MainCtrl', ['$rootScope','$filter', '$cookies', '$window', 'DataService', 'AuthService',
+function ($rootScope, $filter, $cookies, $window, DataService, AuthService) {
+    var self = this;
 
-    $scope.ok = false;
+    self.ok = false;
 
     AuthService.getProfile().then(function (data) {
         $cookies.put("HM_USER_ID", data._id);
@@ -9,13 +10,17 @@ function ($scope, $rootScope, $filter, $cookies, $window, DataService, AuthServi
         $cookies.put("HM_USER_EMAIL", data.email);
         $cookies.put("HM_USER_ROLE", JSON.stringify(data.roles));
     
-        $scope.HM_USER = {};
-        $scope.HM_USER.id = data.id;
-        $scope.HM_USER.name= data.name;
-        $scope.HM_USER.email= data.email;
-        $scope.HM_USER.roles= data.roles;
+        var user = {};
 
-        $scope.ok = true;
+        user.id = data._id;
+        user.name= data.name;
+        user.email= data.email;
+        user.roles= data.roles;
+
+        self.HM_USER = user;
+        $rootScope.HM_USER = angular.copy(user);
+
+        self.ok = true;
     }, function (error) {
         console.log(error);
         AuthService.clearCookie();
@@ -23,7 +28,7 @@ function ($scope, $rootScope, $filter, $cookies, $window, DataService, AuthServi
     }); 
 
     //Logout
-    $scope.logout = function(){
+    self.logout = function(){
         $window.swal({
             title: 'Logout',
             text: "You really want to go?",
@@ -53,45 +58,45 @@ function ($scope, $rootScope, $filter, $cookies, $window, DataService, AuthServi
     }
 
     //
-    $scope.menuAvailable = function(roles){
-        if(!$scope.HM_USER) return 0;
-
-        return !!$scope.HM_USER.roles.filter(function (role) {
-            return roles.indexOf(role) >= 0;
-        }).length;
+    self.menuAvailable = function(roles){
+        if(!self.HM_USER) return 0;
+        return DataService.checkRole(roles);
     }
 
 }]);
 
-app.controller('TSCtrl', ['$scope', '$rootScope', '$filter', '$interval', '$timeout', '$cookies', '$window','DataService',
-function ($scope, $rootScope, $filter, $interval, $timeout, $cookies, $window, DataService) {
-    $scope.timesheet = {Description:'',Hours:0};
+app.controller('TSCtrl', ['$filter', '$interval', '$timeout', '$cookies', '$window','DataService',
+function ($filter, $interval, $timeout, $cookies, $window, DataService) {
+    var self = this;
 
-    $scope.phaseOptions = ["N/A", "Discovery", "Design", "Development", "Deployment"];
-    $scope.timesheet.Phase = "N/A";
-    $scope.submit = function () {
-        $window.swal({type:'success', title:'Submit success', text:'<pre>'+ JSON.stringify($scope.timesheet) +'</pre>'})
+    self.timesheet = {Description:'',Hours:0};
+
+    self.phaseOptions = ["N/A", "Discovery", "Design", "Development", "Deployment"];
+    self.timesheet.Phase = "N/A";
+    self.submit = function () {
+        $window.swal({type:'success', title:'Submit success', text:'<pre>'+ JSON.stringify(self.timesheet) +'</pre>'})
     }
 
-    $scope.reset = function () {
-        $scope.timesheet = {};
+    self.reset = function () {
+        self.timesheet = {};
     }
 
 } ]);
 
-app.controller('PersonCtrl', ['$scope', '$rootScope', '$filter', '$interval', '$timeout', '$cookies', '$window' ,'DataService',
-function ($scope, $rootScope, $filter, $interval, $timeout, $cookies, $window, DataService) {
-    $scope.isDebug = false;
-    $scope.loading = false;
+app.controller('PersonCtrl', ['$filter', '$interval', '$timeout', '$cookies', '$window' ,'DataService',
+function ($filter, $interval, $timeout, $cookies, $window, DataService) {
+    var self = this;
+    this.isDebug = true;
+    this.loading = false;
 
-    $scope.lstPerson = [];
-    $scope.selPerson = {};
+    this.lstPerson = [];
+    this.selPerson = {'name': "tada"};
 
-    $scope.submit = function () {
+    this.submit = function () {
         $window.swal({type:'success', title:'Submit success', text:'<pre>'+ JSON.stringify($scope.selPerson)+'</pre>'})
     }
 
-    $scope.reset = function () {
+    this.reset = function () {
         $scope.status = null;
     }
 
@@ -292,5 +297,12 @@ function ($scope, $rootScope, $filter, $interval, $timeout, $window, $cookies, U
             });
         }
     }   
+
+    $scope.fieldList=[
+        {name: 'File1', displayName:'File 1', model:{}, error:{}},
+        {name: 'File2', displayName:'File 2', model:{}, error:{}},
+    ];
+
+    $scope.show=function(){console.log($scope.fieldList);};
 
 } ]);

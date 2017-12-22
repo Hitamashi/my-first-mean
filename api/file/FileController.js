@@ -123,6 +123,6 @@ exports.updateFile = function (req, res) {
     req.body.modifiedDate = new Date();
     File.findByIdAndUpdate(req.params.id, req.body, {new: true}, function (err, file) {
         if (err) return res.status(500).send("There was a problem updating the user.");
-        res.status(200).send(user);
+        res.status(200).send(file);
     });
 };

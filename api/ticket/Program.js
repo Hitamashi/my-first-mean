@@ -1,6 +1,6 @@
 var mongoose = require("mongoose");
 
-var User = require("../user/User");
+var Schema = mongoose.Schema;
 
 var ProgramSchema = new mongoose.Schema({  		
     operator: {type: Schema.Types.ObjectId, ref: "User"}, 	//Dieu hanh
@@ -9,10 +9,12 @@ var ProgramSchema = new mongoose.Schema({
     stay: String,                                           //Luu tru
     transport: String,                                      //Phuong tien
     note: String,											//Ghi chu
-    confirmByOperator: {type:Boolean, default: false},	    //Confirm by operator
+    
     createdDate: { type : Date, default: Date.now },
-    modifiedDate: { type : Date, default: Date.now },		
+    modifiedDate: { type : Date, default: Date.now },	
+    ticket: {type: Schema.Types.ObjectId, ref: "Ticket"},
+    denyReason: String,	
 });
 
-mongoose.model("Resquest", ProgramSchema);
-module.exports = mongoose.model("Resquest");
+mongoose.model("Program", ProgramSchema);
+module.exports = mongoose.model("Program");

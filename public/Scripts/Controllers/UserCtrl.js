@@ -88,7 +88,7 @@ app.controller('UserCtrl', ['$scope', '$rootScope', '$filter', '$cookies', '$win
             confirmButtonText: 'Yes',
             input: 'password',
             inputAutoTrim:true,
-            inputAttributes:{"minlength":8, "autocomplete":"on"},
+            inputAttributes:{"minlength":8, "autocomplete":"off"},
             showLoaderOnConfirm: true,
             allowOutsideClick: false,
             preConfirm: function(password) {

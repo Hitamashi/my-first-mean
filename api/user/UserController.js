@@ -76,7 +76,7 @@ exports.removeUser = function (req, res) {
 // UPDATES A SINGLE USER IN THE DATABASE
 // Added VerifyToken middleware to make sure only an authenticated user can put to this route
 exports.updateUser = function (req, res) {
-    //console.log(req.body);
+    console.log(req.body);
     req.body.modifiedDate = new Date();
 
     User.findByIdAndUpdate(req.params.id, req.body, {new: true}, function (err, user) {
@@ -87,7 +87,12 @@ exports.updateUser = function (req, res) {
 
 exports.updatePassword = function (req,res) {
     req.body.modifiedDate = new Date();
-    return updateUser(req,res);
+    bcrypt.hash(req.body.password, 8, function(err, hashedPassword){
+        if(err)
+            res.status(500).send("There was a problem updating the password.");
+        req.body.password = hashedPassword;
+        return exports.updateUser(req,res);
+    });
 };
 
 //Get user roles list

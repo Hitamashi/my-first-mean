@@ -1,0 +1,79 @@
+<div class="row" ng-show="pr.status._id==1 && pr.checkRole()">
+    <div class="col-md-12" style="margin-bottom:10px">
+        <button class='btn btn-primary' ng-click="pr.deny()"> Từ chối yêu cầu </button>
+    </div>
+</div>
+
+<div class="row" ng-show="pr.status._id>1 || (pr.checkRole() && pr.status._id==1)">
+    <div class="col-md-12">
+        <div class="box box-primary" ng-class="{'collapsed-box': pr.isCollapsed()}">
+        <div class="box-header with-border">
+            <h3 class="box-title">
+                <strong>Chương trình</strong>
+                <small ng-show='pr.program.operator'> thực hiện bởi: {{pr.program.operator.name}}</small>
+            </h3>
+            <div class="box-tools pull-right">
+                <a class="btn btn-box-tool" ng-href="#History/program/{{pr.ticket}}"
+                target="_blank" ng-hide="pr.program.view.history">
+                    <i class="fa fa-history" aria-hidden="true"></i> History
+                </a>
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa" ng-class="pr.isCollapsed()? 'fa-plus':'fa-minus'"></i>
+                </button>
+            </div>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        
+        <div class="box-body">
+            <form role="form" name="myForm">
+            <div class="form-group">
+              <label for="price">Giá tour</label>
+              <input id="price" type="number" class="form-control" ng-model="pr.program.price" placeholder="" required ng-readonly="pr.program.view.disabled">
+            </div>
+            <div class="form-group">
+              <label for="stay">Lưu trú</label>
+              <input id="stay" type="text" class="form-control" ng-model="pr.program.stay" placeholder="" required ng-readonly="pr.program.view.disabled">
+            </div>
+            <div class="form-group">
+              <label for="transport">Phương tiện</label>
+              <input id="transport" type="text" class="form-control" ng-model="pr.program.transport" placeholder="" required ng-readonly="pr.program.view.disabled">
+            </div>
+
+            <div class="form-group">
+                <label for="file">
+                    Chương trình 
+                </label>
+                <div class="write-mode" ng-hide="pr.program.view.disabled">
+                    <input id="file" type="file" name="filetoupload" ngf-select
+                        ng-model="pr.myFileModel" ngf-max-size="5MB" required
+                        ngf-model-invalid="errorFile" multiple="false"/>
+                    <i ng-show="myForm.filetoupload.$error.maxSize">
+                        File too large! Maximum 3MB</i>
+                    <div class="progress active" ng-show="pr.myFileModel.progress >= 0">
+                        <div class="progress-bar progress-bar-primary progress-bar-striped" role="progressbar" aria-valuenow="{{pr.myFileModel.progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{pr.myFileModel.progress}}%">
+                            <span class="sr-only">{{pr.myFileModel.progress}}% Complete</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="read-mode" ng-show="pr.program.view.disabled">
+                    <a class="btn btn-default" target="_blank" ng-href="/api/file/download/{{pr.program.programFile._id}}" ng-show="pr.program.programFile" title="Download file"><i class="fa fa-download" aria-hidden="true"></i> Download </a>
+                </div>
+
+            </div>
+            
+            <div class="form-group">
+              <label for="note">Ghi chú</label>
+              <textarea id="note" class="form-control" ng-model="request.note" rows="3" placeholder="Enter ..." ng-readonly="pr.program.view.disabled"></textarea>
+            </div>
+            </form>
+        </div>
+        <!-- /.box-body -->
+
+        <div class="box-footer" ng-hide="pr.program.view.disabled">
+            <button class="btn btn-primary pull-right" ng-click="pr.submit()">Submit</button>
+            <button class="btn btn-default" ng-click="pr.reset()">Reset</button>
+        </div>
+
+        </div>
+    </div>
+</div>

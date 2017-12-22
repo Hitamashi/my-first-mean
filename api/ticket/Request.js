@@ -1,8 +1,9 @@
 var mongoose = require("mongoose");
 
-var User = require("../user/User");
+var Schema = mongoose.Schema;
 
-var RequestSchema = new mongoose.Schema({ 
+var RequestSchema = new mongoose.Schema({
+    ticket: {type: Schema.Types.ObjectId, ref: "Ticket"}, 
 	createdDate: { type : Date, default: Date.now }, 		//ngay bao tour
     salesman: {type: Schema.Types.ObjectId, ref: "User"}, 	//Sale
     destination: String,									//Dia diem
@@ -14,8 +15,9 @@ var RequestSchema = new mongoose.Schema({
     note: String,											//Ghi chu
     result: {type: Boolean, default: false},				//Ket qua
     confirmBySale: {type:Boolean, default: false},			//Confirm by sale
-    modifiedDate: { type : Date, default: Date.now },		
+    modifiedDate: { type : Date, default: Date.now },
+    denyReason: String,	
 });
 
-mongoose.model("Resquest", RequestSchema);
-module.exports = mongoose.model("Resquest");
+mongoose.model("Request", RequestSchema);
+module.exports = mongoose.model("Request");

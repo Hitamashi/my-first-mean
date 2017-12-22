@@ -1,0 +1,64 @@
+    <div class="row" ng-show="req.status._id>0 || req.checkIfSales()">
+        <div class="col-md-12">
+            <div class="box box-primary" ng-class="{'collapsed-box': req.isCollapsed()}">
+                <div class="box-header with-border">
+                    <h3 class="box-title">
+                        <strong>Yêu cầu</strong>
+                        <small ng-show='req.request.salesman'> thực hiện bởi: {{req.request.salesman.name}}</small>
+                    </h3>
+                    <div class="box-tools pull-right">
+                        <a class="btn btn-box-tool" ng-href="#History/request/{{req.ticket}}"
+                        target="_blank" ng-hide='req.request.view.history'>
+                            <i class="fa fa-history" aria-hidden="true"></i> History
+                        </a>
+                        <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa" ng-class="req.isCollapsed()? 'fa-plus':'fa-minus'"></i>
+                        </button>
+                    </div>
+                </div>
+                <!-- /.box-header -->
+                <!-- form start -->
+
+                <div class="box-body">
+                    <form role="form">
+                        <div class="form-group">
+                            <label for="nameClient">Tên đoàn</label>
+                            <input id="nameClient" type="text" class="form-control" ng-model="req.request.nameClient" placeholder="" required ng-readonly="req.request.view.disabled">
+                        </div>
+                        <div class="form-group">
+                            <label for="destination">Địa điểm</label>
+                            <input id="destination" type="text" class="form-control" ng-model="req.request.destination" placeholder="" required ng-readonly="req.request.view.disabled">
+                        </div>
+                        <div class="form-group">
+                            <label for="numberDay">Số ngày đi</label>
+                            <input id="numberDay" type="text" class="form-control" ng-model="req.request.numberDay" placeholder="" required ng-readonly="req.request.view.disabled">
+                        </div>
+                        <div class="form-group">
+                            <label for="numberPeople">Số lượng khách</label>
+                            <input id="numberPeople" type="text" class="form-control" ng-model="req.request.numberPeople" placeholder="" required ng-readonly="req.request.view.disabled">
+                        </div>
+                        <div class="form-group">
+                            <label for="departureDate">Ngày khởi hành</label>
+                            <!--<input class="form-control" date-time format="Đ-MM-YYYY" minView='year' view='year' ng-model="claimDate">-->
+                            <input id="departureDate" type="text" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="req.request.departureDate" is-open="date.open1" close-text="Close" alt-input-formats="altInputFormats" ng-click="date.open1=!date.open1;" placeholder="01-01-1990" ng-readonly="req.request.view.disabled"/>
+                            <!-- /.input group -->
+                        </div>
+                        <div class="form-group">
+                            <label for="description">Yêu cầu</label>
+                            <textarea id="description" class="form-control" ng-model="req.request.description" rows="3" placeholder="Enter ..." ng-readonly="req.request.view.disabled"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="note">Ghi chú</label>
+                            <textarea id="note" class="form-control" ng-model="req.request.note" rows="3" placeholder="Enter ..." ng-readonly="req.request.view.disabled"></textarea>
+                        </div>
+                </form>
+            </div>
+            <!-- /.box-body -->
+
+            <div class="box-footer" ng-hide="req.request.view.disabled">
+                <button class="btn btn-primary pull-right" ng-click="req.submit()">Submit</button>
+                <button class="btn btn-default" ng-click="req.reset()">Reset</button>
+            </div>
+
+        </div>
+    </div>
+</div>

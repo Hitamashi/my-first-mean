@@ -1,4 +1,4 @@
-﻿app.factory('DataService', ["$http", "$q", "$filter", function ($http, $q, $filter) {
+﻿app.factory('DataService', ["$http", "$q", "$filter", "$rootScope", function ($http, $q, $filter, $rootScope) {
 
     function sendRequest(method, url, options={}){
         options.url = url;
@@ -57,6 +57,34 @@
         return sendRequest("POST", url, {data: params});
     };
 
+    function checkRole(roles){
+        if(!$rootScope.HM_USER || !$rootScope.HM_USER.roles  ) return 0;
+
+        if($rootScope.HM_USER.roles.indexOf('superuser')>=0){
+            return 1;
+        }
+
+        return !!$rootScope.HM_USER.roles.filter(function (role) {
+            return roles.indexOf(role) >= 0;
+        }).length;
+    }
+
+    var colorStatus = function(status){
+        switch(status){
+            case 0:
+                return 'bg-blue-gradient';
+            case 4:
+            case 7:
+                return 'bg-yellow-gradient';
+            case 8:
+                return 'bg-purple-gradient';
+            case 9:
+                return 'bg-green-gradient';
+            default:
+                return 'bg-aqua-gradient'
+        }
+    }
+
     return {
         sendRequest: sendRequest,
         getmyIP: getmyIP,
@@ -66,5 +94,7 @@
         createHoliday: createHoliday,
         importHoliday: importHoliday,
         getListFile: getListFile,
+        checkRole: checkRole,
+        colorStatus: colorStatus,
     };
 } ]);

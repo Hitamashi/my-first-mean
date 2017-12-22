@@ -55,9 +55,20 @@
     <script src="/Scripts/Directives/dirPagination.js" type="text/javascript" defer></script>
     <script src="/Scripts/Controllers/controller.js" type="text/javascript" defer></script>
     <script src="/Scripts/Controllers/UserCtrl.js" type="text/javascript" defer></script>
+    <script src="/Scripts/Controllers/TicketCtrl.js" type="text/javascript" defer></script>
+    <script src="/Scripts/Controllers/DashboardCtrl.js" type="text/javascript" defer></script>
+    <script src="/Scripts/Controllers/HistoryCtrl.js" type="text/javascript" defer></script>
+
+    <script src="/Scripts/Directives/Form/requestForm.js" type="text/javascript" defer></script>
+    <script src="/Scripts/Directives/Form/programForm.js" type="text/javascript" defer></script>
+    <script src="/Scripts/Directives/Form/infoForm.js" type="text/javascript" defer></script>
+    <script src="/Scripts/Directives/Form/estimationForm.js" type="text/javascript" defer></script>
+    <script src="/Scripts/Directives/Form/contractAdminForm.js" type="text/javascript" defer></script>
+    <script src="/Scripts/Directives/Form/contractAccForm.js" type="text/javascript" defer></script>
+    <script src="/Scripts/Directives/Form/followForm.js" type="text/javascript" defer></script>
 
   </head>
-  <body class="hold-transition skin-black-light sidebar-collapse sidebar-mini" ng-app="appSentinel" ng-controller="MainCtrl">
+  <body class="hold-transition skin-black-light sidebar-collapse sidebar-mini" ng-app="appSentinel" ng-controller="MainCtrl as main">
     <div class="wrapper">
       <!-- Main Header -->
       <header class="main-header">
@@ -82,10 +93,10 @@
           <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
               <li class="">
-                <a href > Hello <strong>{{HM_USER.name}}</strong></a>
+                <a href > Hello <strong>{{main.HM_USER.name}}</strong></a>
               </li>
               <li class="">
-                <a href ng-click="logout()"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
+                <a href ng-click="main.logout()"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</a>
               </li>
             </ul>
           </div>
@@ -99,24 +110,14 @@
 
           <!-- Sidebar Menu -->
           <ul class="sidebar-menu">
-                <li ng-show="menuAvailable(['superuser', 'director'])">
+                <li>
+                    <a href="#Dashboard">
+                        <i class="fa fa-dashboard"></i> <span>Dashboard</span>
+                    </a>
+                </li>
+                <li ng-show="main.menuAvailable(['superuser', 'director'])">
                     <a href="#UserManagement">
                         <i class="fa fa-users"></i> <span>User management</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#Timesheet">
-                        <i class="fa fa-file-text-o"></i> <span>Timesheet</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#Person">
-                        <i class="fa fa-users"></i> <span>Person</span>
-                    </a>
-                </li>
-                <li>
-                    <a href="#Holiday">
-                        <i class="fa fa-calendar"></i> <span>Holiday</span>
                     </a>
                 </li>
           </ul>
@@ -125,7 +126,7 @@
         <!-- /.sidebar -->
       </aside>
       <!-- Content Wrapper. Contains page content -->
-      <div ng-view ng-show="ok"></div>
+      <div ng-view ng-show="main.ok"></div>
       <!-- /.content-wrapper -->
       <!-- Main Footer -->
       <footer class="main-footer">

@@ -16,6 +16,9 @@ app.get('/api', function (req, res) {
   res.status(200).send('API works.');
 });
 
+var TicketController = require(__root + 'api/ticket/TicketRoutes');
+app.use('/api/tickets', TicketController);
+
 var FileController = require(__root + 'api/file/FileRoutes');
 app.use('/api/file', FileController);
 

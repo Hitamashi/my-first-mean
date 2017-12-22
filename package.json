@@ -18,8 +18,7 @@
     "formidable": "^1.1.1",
     "jsonwebtoken": "^7.4.1",
     "mongoose": "^4.8.5",
-    "mv": "^2.1.1",
-    "pusher": "^1.5.1"
+    "mv": "^2.1.1"
   },
   "devDependencies": {
     "jshint": "^2.9.5",

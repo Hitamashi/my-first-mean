@@ -10,6 +10,7 @@ app.config(function ($routeProvider) {
     .when('/Person', {
         templateUrl: '/Views/Person.html',
         controller: 'PersonCtrl',
+        controllerAs: 'per',
         resolve: {
             access: ["Access", function (Access) { return Access.isAuthenticated(); }],
         }
@@ -32,6 +33,32 @@ app.config(function ($routeProvider) {
             userProfile: 'UserProfile'
         }
     })
-    .otherwise({redirectTo: '/Demo'})
+    .when('/Ticket/:id', {
+        templateUrl: '/Views/Ticket.htm',
+        controller: 'TicketCtrl',
+        controllerAs: 'tk',
+        resolve: {
+            access: ["Access", function (Access) { return Access.isAuthenticated(); }],
+            userProfile: 'UserProfile'
+        }
+    })
+    .when('/Dashboard', {
+        templateUrl: '/Views/Dashboard.htm',
+        controller: 'DashboardCtrl',
+        resolve: {
+            access: ["Access", function (Access) { return Access.isAuthenticated(); }],
+            userProfile: 'UserProfile'
+        }
+    })
+    .when('/History/:type/:ticketId', {
+        templateUrl: '/Views/History.htm',
+        controller: 'HistoryCtrl',
+        controllerAs: 'h',
+        resolve: {
+            access: ["Access", function (Access) { return Access.isAuthenticated(); }],
+            userProfile: 'UserProfile'
+        }
+    })
+    .otherwise({redirectTo: '/Dashboard'})
     ;
 })

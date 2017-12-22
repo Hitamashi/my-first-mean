@@ -1,0 +1,56 @@
+<!-- Content Wrapper. Contains page content -->
+<div class="content-wrapper" ng-strict-di>
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <h1>
+        Tour {{tk.ticket._id}}
+        <span class="label" ng-class="tk.colorStatus(tk.ticket.status._id)">{{tk.ticket.status.description}}</span>
+    </h1>
+</section>
+
+<!-- Main content -->
+<section class="content overlay-wrapper">
+    
+    <div class="overlay" ng-show="tk.loading" style="position:fixed; display:block; top:0; left:0; width:100%; height: 100%;">
+        <i class="fa fa-refresh fa-spin"></i>
+    </div>
+	<div class="row">
+		<div class='col-md-12'>
+			<div class="pull-right" style="margin-bottom:10px">
+				<button class="btn btn-primary" ng-click="toggleExpand()">{{tk.isExpandedAll?  'Collapse' : 'Expand'}} all</button>
+			</div>
+		</div>
+	</div>
+
+	<!--Step 0-->
+    <request-form request="tk.ticket.request" ticket="tk.ticket._id" status="tk.ticket.status"></request-form>
+
+    <!--Step 2-->
+    <program-form program="tk.ticket.program" ticket="tk.ticket._id" status="tk.ticket.status"></program-form>
+
+    <!--Step 3-->
+    <info-form info="tk.ticket.info" ticket="tk.ticket._id" status="tk.ticket.status"></info-form>
+
+    <!--Step 4-->
+    <estimation-form estimation="tk.ticket.estimation" ticket="tk.ticket._id" status="tk.ticket.status"></estimation-form>
+
+    <!--Step 5-->
+    <contract-admin-form contract="tk.ticket.contract" ticket="tk.ticket._id" status="tk.ticket.status"></contract-admin-form>
+
+    <!-- Step 6 -->
+    <contract-acc-form contract="tk.ticket.contract" ticket="tk.ticket._id" status="tk.ticket.status"></contract-acc-form>
+
+	<!-- Step 7 -->
+    <follow-form follow="tk.ticket.follow" ticket="tk.ticket._id" status="tk.ticket.status" contract="tk.ticket.contract"></follow-form>    
+
+    <div class="row">
+       
+    </div>
+    <!-- End Test-->
+    <div >
+                
+    </div>
+</section><!-- /.content -->
+
+<!-- End dialog modal template -->
+</div><!-- /.content-wrapper -->

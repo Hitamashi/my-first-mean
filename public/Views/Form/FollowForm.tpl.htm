@@ -1,0 +1,142 @@
+<div class="row" ng-show="f.status._id==7 && f.checkRoleDirector()">
+    <div class="col-md-12" style="margin-bottom:20px">
+        <button class='btn btn-danger' ng-click="f.denyContract()"> Từ chối hợp đồng </button>
+        <button class='btn btn-primary' ng-click="f.acceptContract()"> Xác nhận hợp đồng </button>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12" ng-show="f.status._id>=8">
+        <div class="box box-primary" ng-class="{'collapsed-box': f.isCollapsed()}">
+        <div class="box-header with-border">
+            <h3 class="box-title">
+                <strong>Theo dõi hợp đồng</strong>
+                <small ng-show='f.follow.accountant'> thực hiện bởi: {{f.follow.accountant.name}}</small>
+            </h3>
+            <div class="box-tools pull-right">
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa" ng-class="f.isCollapsed()? 'fa-plus':'fa-minus'"></i>
+                </button>
+            </div>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        
+        <div class="box-body">
+            <h4>Thông tin cơ bản</h4>
+            <form role="form" name="myForm1">
+            <div class="form-group">
+              <label for="contractNumber">Số hợp đồng</label>
+              <input id="contractNumber" type="text" class="form-control" ng-model="f.follow.contractNumber" placeholder="" readonly>
+            </div>
+
+            <div class="form-group">
+              <label for="tourName">Tên tour</label>
+              <input id="tourName" type="text" class="form-control" ng-model="f.follow.tourName" placeholder="" ng-readonly="!f.checkRole() || f.follow.view.disabled">
+            </div>
+
+            <div class="form-group">
+                <label for="startDate">Ngày khởi hành</label>
+                <!--<input class="form-control" date-time format="Đ-MM-YYYY" minView='year' view='year' ng-model="claimDate">-->
+                <input id="startDate" type="text" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="f.startDate" is-open="date.open1" close-text="Close" alt-input-formats="altInputFormats" ng-click="date.open1=!date.open1;" placeholder="01-01-1990"  ng-readonly="!f.checkRole() || f.follow.view.disabled"/>
+                <!-- /.input group -->
+            </div>
+
+            <div class="form-group">
+                <label for="endDate">Ngày kết thúc</label>
+                <!--<input class="form-control" date-time format="Đ-MM-YYYY" minView='year' view='year' ng-model="claimDate">-->
+                <input id="endDate" type="text" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="f.endDate" is-open="date.open2" close-text="Close" alt-input-formats="altInputFormats" ng-click="date.open2=!date.open2;" placeholder="01-01-1990"  ng-readonly="!f.checkRole() || f.follow.view.disabled"/>
+                <!-- /.input group -->
+            </div>
+
+            <div class="form-group">
+              <label for="transport">Phương tiện</label>
+              <input id="transport" type="text" class="form-control" ng-model="f.follow.transport" placeholder="" required  ng-readonly="!f.checkRole() || f.follow.view.disabled">
+            </div>
+
+            <div class="form-group">
+              <label for="note">Ghi chú</label>
+              <textarea id="note" class="form-control" ng-model="f.follow.note" rows="3" placeholder="Enter ..."  ng-readonly="!f.checkRole() || f.follow.view.disabled"></textarea>
+            </div>
+            </form>
+
+            <h4 style="border-top: 1px solid lightgray;padding-top: 15px;">
+                Thanh toán
+            </h4>
+            <form role="form" name="formMoney">
+                <div class="form-group">
+                    <label for="total">Tổng tiền</label>
+                    <input id="total" type="number" class="form-control" ng-model="f.follow.total" placeholder="" required  ng-readonly="!f.checkRole() || f.follow.view.disabled">
+                </div>
+                
+                <div class="row">
+                    <div class="col-md-6">
+                        <table class="table table-condensed">
+                            <tbody>
+                                <tr>
+                                    <th scope="row">Số lần thanh toán</th>
+                                    <td>{{f.receiveNum()}}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Đã thanh toán</th>
+                                    <td>{{f.receiveSum()}}</td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">Còn lại</th>
+                                    <td>{{f.rest()}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div ng-repeat="r in f.follow.receive track by $index" class="form-group">
+                    <label for="receive{{$index}}">Lần {{$index + 1}}</label>
+                    <input id="receive{{$index}}" min="0" type="number" class="form-control" ng-model="f.follow.receive[$index]" placeholder="" required  ng-readonly="!f.checkRole() || f.follow.view.disabled">
+                </div>
+            </form>
+            <div class='box-footer' ng-hide='!f.checkRole() || f.follow.view.disabled'>
+                <button class="btn btn-primary pull-right" ng-click="f.submit()">Submit</button>
+            </div>
+
+            <h4 style="border-top: 1px solid lightgray;padding-top: 15px;">
+                Upload File
+            </h4>
+            <form role="form" name="myForm">
+            <!-- List of upload field is in controller -->
+            <div class="form-group" ng-repeat="fi in f.fieldList">
+                <label for="{{fi.name}}">
+                    {{fi.displayName}}
+                </label>
+                <div ng-show="f.follow[fi.name]" style="margin-bottom: 10px">
+                    <a class="btn btn-primary" target="_blank" ng-href="/api/file/download/{{f.follow[fi.name]}}" ng-show="f.follow[fi.name]" title="Download file"><i class="fa fa-download" aria-hidden="true"></i> Download </a>
+                    <button class="btn btn-default" ng-click="fi.showEdit=!fi.showEdit" ng-show="f.checkRole()"><i class="fa fa-edit"></i>Sửa</button>
+                </div>
+                <div class="row" ng-show="(!f.follow[fi.name] && f.checkRole() && !f.follow.view.disabled ) || fi.showEdit">
+                    <div class="col-md-3">
+                        <input id="{{fi.name}}" type="file" name="{{fi.name}}" ngf-select
+                        ng-model="fi.model" ngf-max-size="5MB" required
+                        ngf-model-invalid="fi.error" multiple="false"/>
+                        <i ng-show="myForm.{{fi.name}}.$error.maxSize">
+                        File too large! Maximum 5MB</i>
+                        <div class="progress active" ng-show="fi.model.progress >= 0">
+                        <div class="progress-bar progress-bar-primary progress-bar-striped" role="progressbar" aria-valuenow="{{fi.model.progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{fi.model.progress}}%">
+                            <span class="sr-only">{{fi.model.progress}}% Complete</span>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="col-md-1">
+                        <button class='btn btn-default' ng-click='f.uploadFollow(fi.name, fi.model)' noformvalidation>Upload</button>
+                    </div>
+                </div>
+            </div>
+            </form>
+        </div>
+        <!-- /.box-body -->
+
+        <div class="box-footer" ng-show="f.checkRole() && !f.follow.view.disabled">
+            <button class='btn btn-danger pull-right' ng-click="f.finishContract()">Hoàn tất</button>
+            <button class="btn btn-default" ng-click="f.reset()">Reset</button>
+        </div>
+
+        </div>
+    </div>
+</div>

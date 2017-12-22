@@ -15,8 +15,6 @@ var jwt = require('jsonwebtoken'); // used to create, sign, and verify tokens
 var bcrypt = require('bcryptjs');
 var config = require(__root + '/config.js' ); // get config file
 
-var pusher = require(__root + '/Pusher.js' );
-
 router.post('/login', function(req, res) {
     console.log("Start login:" + req.body.email);
     User.findOne({ email: req.body.email.trim() }, function (err, user) {
@@ -37,8 +35,6 @@ router.post('/login', function(req, res) {
                 var token = jwt.sign({ id: user._id }, config.secret, {
                   expiresIn: 86400 // expires in 24 hours
                 });
-
-                pusher.trigger('newLogin', 'login', user);
 
                 // return the information including token as JSON
                 res.status(200).cookie('HM_ID', token, {httpOnly:true, sameSite: true}).send({ auth: true});

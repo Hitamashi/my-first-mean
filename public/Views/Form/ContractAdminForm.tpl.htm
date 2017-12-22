@@ -1,0 +1,73 @@
+<div class="row" ng-show="c.status._id==4 && c.checkDirector()">
+    <div class="col-md-12" style="margin-bottom:20px">
+        <button class='btn btn-danger' ng-click="c.denyProgram()"> Từ chối chương trình </button>
+        <button class='btn btn-primary' ng-click="c.acceptProgram()"> Xác nhận chương trình </button>
+    </div>
+</div>
+
+<div class="row" ng-show="c.status._id >5 || (c.checkAdmin() && c.status._id == 5)">
+    <div class="col-md-12">
+        <div class="box box-primary" ng-class="{'collapsed-box': c.isCollapsed()}">
+        <div class="box-header with-border">
+            <h3 class="box-title">
+                <strong>Hợp đồng</strong> - Admin
+                <small ng-show='c.contract.admin'> thực hiện bởi: {{c.contract.admin.name}}</small>
+            </h3>
+            <div class="box-tools pull-right">
+                <a class="btn btn-box-tool" ng-href="#History/contract/{{c.ticket}}"
+                target="_blank" ng-hide="c.contract.view.history">
+                    <i class="fa fa-history" aria-hidden="true"></i> History
+                </a>
+                <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa" ng-class="c.isCollapsed()? 'fa-plus':'fa-minus'"></i>
+                </button>
+            </div>
+        </div>
+        <!-- /.box-header -->
+        <!-- form start -->
+        
+        <div class="box-body">
+            <form role="form">
+            <div class="form-group">
+                <label for="contractNumber">Số hợp đồng</label>
+                <input id="contractNumber" type="text" class="form-control" ng-model="c.contract.contractNumber" placeholder="" required ng-readonly="c.isDisabled()">
+            </div>
+            <div class="form-group">
+                <label for="file">
+                    Hợp đồng
+                    <i ng-show="myForm.filetoupload.$error.required">*required
+                    </i>
+                </label>
+                <div class="write-mode" ng-hide="c.isDisabled()">
+                    <input id="file" type="file" name="filetoupload" ngf-select
+                        ng-model="c.myFileModel" ngf-max-size="3MB" required
+                        ngf-model-invalid="errorFile" multiple="false"/>
+                    <i ng-show="myForm.filetoupload.$error.maxSize">
+                        File too large! Maximum 3MB</i>
+                    <div class="progress active" ng-show="c.myFileModel.progress >= 0">
+                        <div class="progress-bar progress-bar-primary progress-bar-striped" role="progressbar" aria-valuenow="{{c.myFileModel.progress}}" aria-valuemin="0" aria-valuemax="100" style="width:{{c.myFileModel.progress}}%">
+                            <span class="sr-only">{{c.myFileModel.progress}}% Complete</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="read-mode" ng-show="c.isDisabled()">
+                    <a class="btn btn-default" target="_blank" ng-href="/api/file/download/{{c.contract.contractFile._id}}" ng-show="c.contract.contractFile" title="Download file"><i class="fa fa-download" aria-hidden="true"></i> Download </a>
+                </div>
+            </div>
+
+            
+            <div class="form-group">
+                <label for="note">Ghi chú</label>
+                <textarea id="note" class="form-control" ng-model="c.request.noteAdmin" rows="3" placeholder="Enter ..." ng-readonly="c.isDisabled()"></textarea>
+            </div>
+            </form>
+        </div>
+        <!-- /.box-body -->
+
+        <div class="box-footer" ng-hide="c.isDisabled()">
+            <button class="btn btn-primary pull-right" ng-click="c.submit()">Submit</button>
+            <button class="btn btn-default" ng-click="c.reset()">Reset</button>
+        </div>
+
+        </div>
+    </div>
+</div>
