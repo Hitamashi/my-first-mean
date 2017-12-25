@@ -105,7 +105,7 @@ exports.createRequest = function(req,res){
             });
         }
     });
-}
+};
 
 //DENY A REQUEST
 exports.denyRequest = function(req,res){
@@ -124,7 +124,7 @@ exports.denyRequest = function(req,res){
             });
         }
     });
-}
+};
 
 //CREATE PROGRAM
 exports.createProgram = function(req,res){
@@ -147,7 +147,7 @@ exports.createProgram = function(req,res){
             });
         }
     });
-}
+};
 
 //DENY A PROGRAM
 exports.denyProgram = function(req,res){
@@ -166,7 +166,7 @@ exports.denyProgram = function(req,res){
             });
         }
     });
-}
+};
 
 //CREATE INFO
 exports.createInfo = function(req,res){
@@ -189,7 +189,7 @@ exports.createInfo = function(req,res){
             });
         }
     });
-}
+};
 
 //CREATE INFO
 exports.createEstimation = function(req,res){
@@ -212,7 +212,7 @@ exports.createEstimation = function(req,res){
             });
         }
     });
-}
+};
 
 //ACCEPT PROGRAM
 exports.acceptProgram = function(req,res){
@@ -226,7 +226,7 @@ exports.acceptProgram = function(req,res){
         else
             res.status(200).send(ticket);
     });
-}
+};
 
 //CREATE CONTRACT
 exports.createContract = function(req,res){
@@ -249,7 +249,7 @@ exports.createContract = function(req,res){
             });
         }
     });
-}
+};
 
 //UPDATE CONTRACT
 exports.updateContract = function(req,res){
@@ -270,7 +270,7 @@ exports.updateContract = function(req,res){
             }
             else if(req.body.status == 'REJECTED'){
                 _ticket.status = 5;
-                _ticket.contract = null
+                _ticket.contract = null;
             }
 
             Ticket.findByIdAndUpdate(req.body.ticket, _ticket, function(err,ticket){
@@ -284,7 +284,7 @@ exports.updateContract = function(req,res){
             });
         }
     });
-}
+};
 
 //DENY CONTRACT
 exports.denyContract = function(req,res){
@@ -303,7 +303,7 @@ exports.denyContract = function(req,res){
             });
         }
     });
-}
+};
 
 //ACCEPT CONTRACT
 exports.acceptContract = function(req,res){
@@ -333,7 +333,7 @@ exports.acceptContract = function(req,res){
             
         }
     });
-}
+};
 
 //UPDATE FOLLOW
 exports.updateFollow = function(req,res){
@@ -359,7 +359,7 @@ exports.updateFollow = function(req,res){
             });
         }
     });
-}
+};
 
 //UPDATE FOLLOW
 exports.finishTicket = function(req,res){
@@ -373,7 +373,7 @@ exports.finishTicket = function(req,res){
             res.status(200).send(ticket);
         }
     });
-}
+};
 
 exports.getModel = function(type){
     switch(type){
@@ -390,7 +390,7 @@ exports.getModel = function(type){
         default:
             return null;
     }
-}
+};
 
 //GET HISTORY
 exports.getHistory = function(req,res){
@@ -417,4 +417,4 @@ exports.getHistory = function(req,res){
             res.status(200).send(items);
         }
     });
-}
+};
