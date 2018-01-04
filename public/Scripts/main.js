@@ -1,4 +1,4 @@
-﻿var app = angular.module('appSentinel', ['ui.bootstrap', 'ngAnimate', 'ngSanitize', 'ui.select','angularUtils.directives.dirPagination', 'ngCookies', 'ngRoute','ngFileUpload']);
+﻿var app = angular.module('appSentinel', ['ui.bootstrap', 'ngAnimate', 'ngSanitize', 'ui.select','angularUtils.directives.dirPagination', 'ngCookies', 'ngRoute','ngFileUpload', 'bcherny/formatAsCurrency']);
 
 //FILTERS
 app.filter('propsFilter', function () {
@@ -32,3 +32,10 @@ app.filter('propsFilter', function () {
         return out;
     };
 });
+
+app.filter('vnd', function ($filter) {
+    return function (value) {
+        if(!value || value==0) return '0';
+        return 'VND ' + $filter('number')(value) ;
+    }
+})

@@ -16,7 +16,7 @@ app.directive('contractAdminForm', function () {
 app.controller('contractAdminCtrl', ['$rootScope', '$window', '$cookies', 'Upload', 'DataService', 
 function ($rootScope, $window, $cookies, Upload, DataService) {
     var self = this;
-    self.curentUser = $cookies.get('HM_USER_NAME');
+    self.currentUser = $cookies.get('HM_USER_NAME');
 
     self.submit = function(){
         if(!self.myFileModel){
@@ -141,6 +141,35 @@ function ($rootScope, $window, $cookies, Upload, DataService) {
                 return new Promise(
                     function(resolve){
                         return DataService.sendRequest("POST", "/api/tickets/acceptProgram", {'data': {'ticket':self.ticket}})
+                            .then(function(data){
+                                $window.swal('Thành công','','success');
+                                $rootScope.$emit("reloadTicketPage");
+                            },
+                            function(data){
+                                $window.swal('Error!','Operation failed','error');
+                            });
+                    }
+                )
+            },
+        });
+    };
+
+    self.denyInfo = function(){
+        $window.swal({
+            title: 'Từ chối',
+            text: "Bạn muốn từ chối thông tin? Nhập lý do",
+            type: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes',
+            input: 'text',
+            showLoaderOnConfirm: true,
+            allowOutsideClick: false,
+            preConfirm: function(text) {
+                return new Promise(
+                    function(resolve){
+                        return DataService.sendRequest("POST", "/api/tickets/denyInfo", {'data': {'ticket':self.ticket, 'reason': self.currentUser +':\n'+ text}})
                             .then(function(data){
                                 $window.swal('Thành công','','success');
                                 $rootScope.$emit("reloadTicketPage");

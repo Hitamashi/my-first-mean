@@ -16,7 +16,7 @@ app.directive('contractAccForm', function () {
 app.controller('contractAccCtrl', ['$rootScope', '$window', '$cookies', 'Upload', 'DataService', 
 function ($rootScope, $window, $cookies, Upload, DataService) {
     var self = this;
-    self.curentUser = $cookies.get('HM_USER_NAME');
+    self.currentUser = $cookies.get('HM_USER_NAME');
 
     self.submit = function(){
         if(!self.contract.status || self.contract.status == 'NEW'){

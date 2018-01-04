@@ -18,6 +18,8 @@ router.post('/newContract',VerifyToken, TicketCtrl.createContract);
 
 router.post('/acceptProgram',VerifyToken, TicketCtrl.acceptProgram);
 router.post('/newEstimation',VerifyToken, TicketCtrl.createEstimation);
+
+router.post('/denyInfo',VerifyToken, TicketCtrl.denyInfo);
 router.post('/newInfo',VerifyToken, TicketCtrl.createInfo);
 router.post('/denyProgram',VerifyToken, TicketCtrl.denyProgram);
 

@@ -18,6 +18,7 @@ app.controller('followCtrl', ['$rootScope', '$window', '$cookies', 'Upload', 'Da
 function ($rootScope, $window, $cookies, Upload, DataService) {
     var self = this;
     self.currentUser = $cookies.get('HM_USER_NAME');
+    self.popupOpen = [];
 
     self.fieldList=[
         {name: 'listFile', displayName:'Danh sách', model:{}, error:{}},
@@ -201,7 +202,7 @@ function ($rootScope, $window, $cookies, Upload, DataService) {
         if(!self.follow || !self.follow.receive) return 0;
         var result = 0;
         self.follow.receive.forEach(function(r){
-            result += r;
+            result += parseFloat(r);
         });
         
         return result;

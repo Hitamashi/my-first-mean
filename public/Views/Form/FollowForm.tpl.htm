@@ -5,7 +5,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-12" ng-show="f.status._id>=8">
+    <div class="col-md-12" ng-if="f.status._id>=8">
         <div class="box box-primary" ng-class="{'collapsed-box': f.isCollapsed()}">
         <div class="box-header with-border">
             <h3 class="box-title">
@@ -36,15 +36,16 @@
             <div class="form-group">
                 <label for="startDate">Ngày khởi hành</label>
                 <!--<input class="form-control" date-time format="Đ-MM-YYYY" minView='year' view='year' ng-model="claimDate">-->
-                <input id="startDate" type="text" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="f.startDate" is-open="date.open1" close-text="Close" alt-input-formats="altInputFormats" ng-click="date.open1=!date.open1;" placeholder="01-01-1990"  ng-readonly="!f.checkRole() || f.follow.view.disabled"/>
+                <input id="startDate" type="text" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="f.follow.startDate" is-open="date.open1" close-text="Close" alt-input-formats="altInputFormats" ng-click="date.open1=!date.open1;" placeholder="01-01-1990"  ng-readonly="!f.checkRole() || f.follow.view.disabled"/>
                 <!-- /.input group -->
             </div>
 
             <div class="form-group">
                 <label for="endDate">Ngày kết thúc</label>
                 <!--<input class="form-control" date-time format="Đ-MM-YYYY" minView='year' view='year' ng-model="claimDate">-->
-                <input id="endDate" type="text" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="f.endDate" is-open="date.open2" close-text="Close" alt-input-formats="altInputFormats" ng-click="date.open2=!date.open2;" placeholder="01-01-1990"  ng-readonly="!f.checkRole() || f.follow.view.disabled"/>
+                <input id="endDate" type="text" class="form-control" uib-datepicker-popup="dd-MM-yyyy" ng-model="f.follow.endDate" is-open="date.open2" close-text="Close" alt-input-formats="altInputFormats" ng-click="date.open2=!date.open2;" placeholder="01-01-1990"  ng-readonly="!f.checkRole() || f.follow.view.disabled"/>
                 <!-- /.input group -->
+                {{date.open2}}
             </div>
 
             <div class="form-group">
@@ -64,7 +65,7 @@
             <form role="form" name="formMoney">
                 <div class="form-group">
                     <label for="total">Tổng tiền</label>
-                    <input id="total" type="number" class="form-control" ng-model="f.follow.total" placeholder="" required  ng-readonly="!f.checkRole() || f.follow.view.disabled">
+                    <input id="total" format-as-currency currency-filter="'vnd'" class="form-control" ng-model="f.follow.total" placeholder="" required  ng-readonly="!f.checkRole() || f.follow.view.disabled">
                 </div>
                 
                 <div class="row">
@@ -77,11 +78,11 @@
                                 </tr>
                                 <tr>
                                     <th scope="row">Đã thanh toán</th>
-                                    <td>{{f.receiveSum()}}</td>
+                                    <td>{{f.receiveSum() | vnd }}</td>
                                 </tr>
                                 <tr>
                                     <th scope="row">Còn lại</th>
-                                    <td>{{f.rest()}}</td>
+                                    <td>{{f.rest() | vnd}}</td>
                                 </tr>
                             </tbody>
                         </table>
@@ -90,7 +91,20 @@
 
                 <div ng-repeat="r in f.follow.receive track by $index" class="form-group">
                     <label for="receive{{$index}}">Lần {{$index + 1}}</label>
-                    <input id="receive{{$index}}" min="0" type="number" class="form-control" ng-model="f.follow.receive[$index]" placeholder="" required  ng-readonly="!f.checkRole() || f.follow.view.disabled">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-dollar"></i></div>
+                                <input id="receive{{$index}}" min="0" format-as-currency currency-filter="'vnd'" class="form-control" ng-model="f.follow.receive[$index]" placeholder="" required  ng-readonly="!f.checkRole() || f.follow.view.disabled"/>
+                            </div>    
+                        </div>
+                        <div class="col-md-6">
+                            <div class="input-group">
+                                <div class="input-group-addon"><i class="fa fa-calendar"></i></div>
+                                <input id="receiveDate{{$index}}" type="text" class="form-control col-md-6" uib-datepicker-popup="dd-MM-yyyy" ng-model="f.follow.receiveDate[$index]" is-open="popupOpen[$index]" close-text="Close" alt-input-formats="altInputFormats" ng-click="popupOpen[$index]=!popupOpen[$index];" placeholder="01-01-1990"  ng-readonly="!f.checkRole() || f.follow.view.disabled"/>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </form>
             <div class='box-footer' ng-hide='!f.checkRole() || f.follow.view.disabled'>

@@ -25,7 +25,8 @@ var FollowSchema = new mongoose.Schema({
     tourFile: {type: Schema.Types.ObjectId, ref:"File"},					//Điều tour
 
     total: {type:Number,default:0}, 									    //Tổng tiền
-    receive: {type: [ {type: Number} ], default:[0,0,0,0,0] },			            //Các đợt thu
+    receive: {type: [ {type: Number} ], default:[0,0,0,0,0] },			    //Các đợt thu
+    receiveDate: {type: [ {type: Date} ], default:[null,null,null,null,null] }, //Ngay thu
     accountant: {type: Schema.Types.ObjectId, ref: "User"},
 });
 

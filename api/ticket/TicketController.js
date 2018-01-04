@@ -191,7 +191,26 @@ exports.createInfo = function(req,res){
     });
 };
 
-//CREATE INFO
+//DENY A INFO
+exports.denyInfo = function(req,res){
+    var _ticket = {status: 2, estimation: null, info: null,  modifiedDate: new Date()};
+    Ticket.findByIdAndUpdate(req.body.ticket, _ticket, function(err,ticket){
+        if(err){
+            console(err);
+            res.status(500).send("Error update ticket");
+        }
+        else{
+            Info.findByIdAndUpdate(ticket.info, {denyReason: req.body.reason}, function(err,info){
+                if(err)
+                    res.status(500).send("Error update request");           
+                else    
+                res.status(200).send(ticket);
+            });
+        }
+    });
+};
+
+//CREATE ESTIMATION
 exports.createEstimation = function(req,res){
     req.body.createdDate = new Date();
     Estimation.create(req.body, 

@@ -17,6 +17,7 @@ app.controller('requestCtrl', ['$rootScope', '$window', '$cookies', 'Upload', 'D
 function ($rootScope, $window, $cookies, Upload, DataService) {
     var self = this;
     //var origin = angular.copy(self.info);
+    self.currentUser = $cookies.get('HM_USER_NAME');
 
     self.submit = function(){
         var _request = angular.copy(self.request);

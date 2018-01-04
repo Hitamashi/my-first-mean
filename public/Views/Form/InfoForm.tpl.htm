@@ -4,7 +4,7 @@
     </div>
 </div>
 
-<div class="row" ng-show="inf.status._id>2 || (inf.checkRole() && inf.status._id==2)">
+<div class="row" ng-if="inf.status._id>2 || (inf.checkRole() && inf.status._id==2)">
     <div class="col-md-12">
         <div class="box box-primary" ng-class="{'collapsed-box': inf.isCollapsed()}">
         <div class="box-header with-border">
@@ -75,7 +75,7 @@
 
             <div class="form-group">
               <label for="total">Tổng tiền</label>
-              <input id="total" type="number" class="form-control" ng-model="inf.info.total" placeholder="" required ng-readonly="inf.info.view.disabled"
+              <input id="total" format-as-currency currency-filter="'vnd'" class="form-control" ng-model="inf.info.total" placeholder="" required ng-readonly="inf.info.view.disabled"
             </div>
 
             <div class="form-group">

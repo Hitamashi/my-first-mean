@@ -8,7 +8,7 @@ var RequestSchema = new mongoose.Schema({
     salesman: {type: Schema.Types.ObjectId, ref: "User"}, 	//Sale
     destination: String,									//Dia diem
     numberDay: String,										//So ngay di (x ngay y dem)
-    numberPeople: Number,									//So luong khach
+    numberPeople: String,									//So luong khach
     departureDate: Date,									//Ngay khoi hanh (Thoi gian di)
     nameClient: String,										//Ten doan khach
     description: String,									//Yeu cau khach

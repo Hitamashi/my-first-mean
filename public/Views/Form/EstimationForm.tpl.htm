@@ -2,8 +2,10 @@
     <div class="col-md-12" style="margin-bottom:10px">
         <button class='btn btn-primary' ng-click="es.deny()"> Từ chối chương trình </button>
     </div>
+    <div class="col-md-12" style="margin-bottom:10px" ng-show="!inf.info.view.disabled">
+        <button class='btn btn-primary' ng-click="es.denyInfo()"> Từ chối thông tin </button>
+    </div>
 </div>
-
 <div class="row" ng-show="(es.status._id >3 || (es.checkRole() &&es.status._id == 3)) && es.checkNotSales()">
     <div class="col-md-12">
         <div class="box box-primary" ng-class="{'collapsed-box': es.isCollapsed()}">

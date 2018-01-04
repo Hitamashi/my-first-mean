@@ -12,7 +12,7 @@ var InfoSchema = new mongoose.Schema({
     taxCode: String,                                        //MST
     phoneNumber: String,                                    //Dien thoai
     account: String,                                        //Tai khoan
-    departureTime: Date,                                    //Thoi gian khoi hanh
+    departureDate: Date,                                    //Thoi gian khoi hanh
     numberAdult: Number,                                    //So nguoi lon
     numberChild_Half: Number,                               //So tre em 1/2
     numberChild_Free: Number,                               //So tre em free
@@ -20,6 +20,7 @@ var InfoSchema = new mongoose.Schema({
     note: String,											//Ghi chu
     modifiedDate: { type : Date, default: Date.now },	
     ticket: {type: Schema.Types.ObjectId, ref: "Ticket"},	
+    denyReason: String,
 });
 
 mongoose.model("Info", InfoSchema);
