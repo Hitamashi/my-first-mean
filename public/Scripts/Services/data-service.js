@@ -73,15 +73,12 @@
         switch(status){
             case 0:
                 return 'bg-blue-gradient';
-            case 4:
-            case 7:
-                return 'bg-yellow-gradient';
             case 8:
-                return 'bg-purple-gradient';
+                return 'bg-purple-gradient';    
             case 9:
                 return 'bg-green-gradient';
             default:
-                return 'bg-aqua-gradient'
+                return 'bg-red-gradient';
         }
     }
 

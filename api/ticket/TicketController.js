@@ -171,6 +171,7 @@ exports.denyProgram = function(req,res){
 //CREATE INFO
 exports.createInfo = function(req,res){
     req.body.createdDate = new Date();
+    console.log(req.body);
     Info.create(req.body, 
     function (err, info) {
         if (err) {
