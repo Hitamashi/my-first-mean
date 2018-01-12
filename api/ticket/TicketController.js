@@ -104,7 +104,7 @@ exports.cancelTicket = function(req,res){
             res.status(200).send(ticket);
         }
     });
-}
+};
 
 //CREATE REQUEST
 exports.createRequest = function(req,res){
