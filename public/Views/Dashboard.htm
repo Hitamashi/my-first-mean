@@ -10,6 +10,19 @@
     <div class="overlay" ng-show="loading" style="position:fixed; display:block; top:0; left:0; width:100%; height: 100%;">
         <i class="fa fa-refresh fa-spin"></i>
     </div>
+
+    <div class="row" ng-if="listTicket.length>0 && checkRoleDirector()">
+        <div class="col-md-2 col-sm-4 col-xs-12" ng-repeat="team in teams">
+            <div class="small-box bg-green-gradient">
+            <div class="inner">
+              <h3>{{team.ticketsNumber}}</h3>
+
+              <strong>{{team.name}}</strong>
+            </div>
+          </div>
+        </div>
+    </div>
+
 	<div class="row">
         <div class="col-md-12">
             <button class="btn btn-primary" ng-click="newTicket()" ng-show="checkRole()" style="margin-bottom: 10px">

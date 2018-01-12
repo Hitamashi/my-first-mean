@@ -6,6 +6,14 @@ function ($scope, $rootScope, $filter, $routeParams, $interval, $timeout, $windo
     $scope.onlyMyTask = false;
     $scope.currentUser = $cookies.get('HM_USER_ID');
 
+    $scope.teams = [
+        {name:"Sales"},
+        {name:"Điều hành"},
+        {name:"Giám đốc"},
+        {name:"Admin"},
+        {name:"Kế toán"},
+    ];
+
     //Get ticket info
     $scope.getlstTicket = function(){
         DataService.sendRequest("GET", '/api/tickets')
@@ -13,6 +21,11 @@ function ($scope, $rootScope, $filter, $routeParams, $interval, $timeout, $windo
             $scope.listAllTicket = data;
             $scope.listMyTicket = data.filter($scope.filterMyTask);
             $scope.listTicket = $scope.listAllTicket;
+
+            $scope.teams.forEach(function(team){
+                var number = data.filter($scope.filterTeamInCharge(team.name)).length;
+                team.ticketsNumber = number;
+            });
 
             console.log($scope.listTicket);
             $scope.loading = false;
@@ -86,6 +99,12 @@ function ($scope, $rootScope, $filter, $routeParams, $interval, $timeout, $windo
         }
     }
 
+    $scope.filterTeamInCharge = function(teamName){
+        return function(element){
+            return $scope.teamInCharge(element) == teamName;    
+        };
+    }
+
     $scope.teamInCharge = function(ticket){
         switch(ticket.status._id){
             case 0:
@@ -119,5 +138,9 @@ function ($scope, $rootScope, $filter, $routeParams, $interval, $timeout, $windo
 
     $scope.checkRole = function(){
         return DataService.checkRole(['sales','director']);
+    }
+
+    $scope.checkRoleDirector = function(){
+        return DataService.checkRole(['director']);
     }
 } ]);
