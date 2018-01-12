@@ -3,7 +3,8 @@ function ($scope, $rootScope, $filter, $routeParams, $interval, $timeout, $windo
     $scope.isDebug = false;
     $scope.listTicket= [];
     $scope.loading = true;
-    $scope.onlyMyTask =false;
+    $scope.onlyMyTask = false;
+    $scope.currentUser = $cookies.get('HM_USER_ID');
 
     //Get ticket info
     $scope.getlstTicket = function(){
@@ -42,7 +43,7 @@ function ($scope, $rootScope, $filter, $routeParams, $interval, $timeout, $windo
             preConfirm: function() {
                 return new Promise(
                     function(resolve){ 
-                        return DataService.sendRequest("POST", "/api/tickets/create")
+                        return DataService.sendRequest("POST", "/api/tickets/create", {data: {user:$scope.currentUser}})
                             .then(function(data){
                                 $window.swal('Thành công','','success');
                                 $timeout( function(){ $window.location.href = '#Ticket/'+data._id;}, 1000 );
@@ -82,6 +83,27 @@ function ($scope, $rootScope, $filter, $routeParams, $interval, $timeout, $windo
                 return DataService.checkRole(['director']);
             case 8:
                 return DataService.checkRole(['accountant']);
+        }
+    }
+
+    $scope.teamInCharge = function(ticket){
+        switch(ticket.status._id){
+            case 0:
+            case 2:
+                return "Sales"
+            case 1:
+            case 3:
+                return "Điều hành";
+            case 4:
+            case 7:
+                return "Giám đốc";
+            case 5:
+                return "Admin";
+            case 6:
+            case 8:
+                return "Kế toán";
+            default:
+                return "-";
         }
     }
 

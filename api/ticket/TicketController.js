@@ -17,6 +17,7 @@ var TicketStatus = require('./TicketStatus');
 exports.createTicket = function (req, res) {
     //Check exist
     Ticket.create({
+        user: req.body.user,
         status : 0,
         createdDate: new Date(),
     }, 
@@ -39,6 +40,7 @@ exports.getOneTicket = function (req, res) {
     .populate({path: 'contract', populate:{path: 'contractFile admin accountant'}})
     .populate({path: 'follow', populate:{path: 'accountant'}})
     .populate('status')
+    .populate('user')
     .exec(function (err, ticket) {
         if (err) {
             console.log(err);
@@ -59,6 +61,7 @@ exports.getListTicket = function (req, res) {
     .populate('contract')
     .populate('follow')
     .populate('status')
+    .populate('user')
     .exec(function (err, ticket) {
         if (err) return res.status(500).send("There was a problem finding the ticket.");
         if (!ticket) return res.status(404).send("No ticket found.");

@@ -39,14 +39,23 @@
                 <div class="table-responsive">
                     <table class="table table-hover">
                         <tr>
-                            <th ng-click="sort('_id')" style="cursor:pointer">
-                                Id
-                                <span class="fa sort-icon" ng-show="sortKey=='_id'" ng-class="{'fa-angle-up':reverse,'fa-angle-down':!reverse}"></span>
+                            <th>
+                                Khách hàng
+                            </th>
+                            <th>
+                                Địa điểm
                             </th>
                             <th ng-click="sort('status')" style="cursor:pointer">
-                            Tình trạng
-                            <span class="fa sort-icon" ng-show="sortKey=='status'" ng-class="{'fa-angle-up':reverse,'fa-angle-down':!reverse}"></span>
-                          </th>
+                                Tình trạng
+                                <span class="fa sort-icon" ng-show="sortKey=='status'" ng-class="{'fa-angle-up':reverse,'fa-angle-down':!reverse}"></span>
+                            </th>
+                            <th>
+                                Trách nhiệm
+                            </th>
+                            <th>
+                                Người tạo
+                            </th>
+
                           <th ng-click="sort('createdDate')" style="cursor:pointer">
                             Ngày tạo
                           <span class="fa sort-icon" ng-show="sortKey=='createdDate'" ng-class="{'fa-angle-up':reverse,'fa-angle-down':!reverse}"></span>
@@ -55,20 +64,24 @@
                             Chình sửa cuối
                           <span class="fa sort-icon" ng-show="sortKey=='modifiedDate'" ng-class="{'fa-angle-up':reverse,'fa-angle-down':!reverse}"></span>
                           </th>
-                          <th>Khách hàng</th>
                           <th></th>
                         </tr>
                         <tr dir-paginate="d in listTicket | orderBy:sortKey:reverse | filter:search | itemsPerPage: 10">
                             <td>
-                                <a class="label bg-gray" ng-if="d._id!=0" target="_blank"
-                                    ng-href="#Ticket/{{d._id}}">
-                                    {{d._id}}
-                                </a>
+                                <span>
+                                    {{d.request.nameClient}}
+                                </span>
+                            </td>
+                            <td>
+                                <span>
+                                    {{d.request.destination}}
+                                </span>
                             </td>
                             <td><span class="badge" ng-class="colorStatus(d.status._id)">{{d.status.description}}</span></td>
+                            <td>{{teamInCharge(d)}}</td>
+                            <td>{{d.user.name}}</td>
                             <td>{{d.createdDate | date:'dd-MM-yyyy HH:mm'}}</td>
                             <td>{{d.modifiedDate | date:'dd-MM-yyyy HH:mm'}}</td>
-                            <td>{{d.info.companyName}}</td>
                             <td> 
                                 <div class="tools">
                                     <a class="btn btn-default" data-toggle="tooltip" title="" data-original-title="Xem" ng-href="#Ticket/{{d._id}}">

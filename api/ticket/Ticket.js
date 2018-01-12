@@ -13,6 +13,7 @@ var TicketSchema = new mongoose.Schema({
     follow: {type: Schema.Types.ObjectId, ref:"Follow"},
 
     status: {type: Number, ref: "TicketState"},
+    user: {type: Schema.Types.ObjectId, ref: "User"},
   	createdDate: { type : Date, default: Date.now },
   	modifiedDate: { type : Date, default: Date.now },
   	finishDate: Date,
