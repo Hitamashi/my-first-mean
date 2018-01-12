@@ -17,6 +17,7 @@ var TicketSchema = new mongoose.Schema({
   	createdDate: { type : Date, default: Date.now },
   	modifiedDate: { type : Date, default: Date.now },
   	finishDate: Date,
+    isArchived: {type: Boolean, default: false},
 });
 mongoose.model("Ticket", TicketSchema);
 

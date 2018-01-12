@@ -6,6 +6,8 @@ function ($rootScope, $filter, $routeParams, $interval, $timeout, $window, $cook
 
     self.ticket= {};
     self.ticket._id = $routeParams.id;
+
+    self.curentUser = $cookies.get('HM_USER_NAME');
     
     self.loading = true;
 
@@ -93,6 +95,35 @@ function ($rootScope, $filter, $routeParams, $interval, $timeout, $window, $cook
 			console.log(error);
         })
     };
+
+    self.cancelTicket = function(){
+        $window.swal({
+            title: 'Hủy tour',
+            text: "Bạn muốn hủy tour? Nhập lý do",
+            type: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes',
+            input: 'text',
+            showLoaderOnConfirm: true,
+            allowOutsideClick: false,
+            preConfirm: function(text) {
+                return new Promise(
+                    function(resolve){
+                        return DataService.sendRequest("POST", "/api/tickets/cancelTicket", {'data': {'ticket':self.ticket._id, 'reason': self.currentUser +':\n'+ text}})
+                            .then(function(data){
+                                $window.swal('Thành công','','success');
+                                $rootScope.$emit("reloadTicketPage");
+                            },
+                            function(data){
+                                $window.swal('Error!','Operation failed','error');
+                            });
+                    }
+                )
+            },
+        });
+    }
 
     //Toggle expand all
     self.isExpandedAll = false;

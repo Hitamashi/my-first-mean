@@ -16,8 +16,11 @@
     </div>
 	<div class="row">
 		<div class='col-md-12'>
+            <div class="pull-left" style="margin-bottom:10px">
+                <button class="btn btn-primary" ng-click="tk.cancelTicket()">Hủy tour</button>
+            </div>
 			<div class="pull-right" style="margin-bottom:10px">
-				<button class="btn btn-primary" ng-click="toggleExpand()">{{tk.isExpandedAll?  'Collapse' : 'Expand'}} all</button>
+				<button class="btn btn-primary" ng-click="tk.toggleExpand()">{{tk.isExpandedAll?  'Collapse' : 'Expand'}} all</button>
 			</div>
 		</div>
 	</div>

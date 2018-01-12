@@ -27,6 +27,7 @@ router.post('/newProgram',VerifyToken, TicketCtrl.createProgram);
 router.post('/newRequest',VerifyToken, TicketCtrl.createRequest);
 router.post('/denyRequest',VerifyToken, TicketCtrl.denyRequest);
 
+router.post('/cancelTicket',VerifyToken, TicketCtrl.cancelTicket);
 router.post('/create',VerifyToken, TicketCtrl.createTicket);
 router.get('/',VerifyToken, TicketCtrl.getListTicket);
 router.get('/:id',VerifyToken, TicketCtrl.getOneTicket);

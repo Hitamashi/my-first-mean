@@ -53,7 +53,13 @@ exports.getOneTicket = function (req, res) {
 
 //GETS LIST ALL TICKET
 exports.getListTicket = function (req, res) {
-    Ticket.find({},null,{sort:"-createdDate"})
+    var query = {
+        $or: [
+            {isArchived: {$exists:false}},
+            {isArchived: req.body.isArchived || false}
+        ],
+    };
+    Ticket.find(query,null,{sort:"-createdDate"})
     .populate('request')
     .populate('program')
     .populate('info')
@@ -86,6 +92,19 @@ exports.updateTicket = function (req, res) {
         res.status(200).send(ticket);
     });
 };
+
+exports.cancelTicket = function(req,res){
+    var _ticket = {isArchived: true , modifiedDate: new Date(), archiveReason: req.body.reason};
+    Ticket.findByIdAndUpdate(req.body.ticket, _ticket, function(err,ticket){
+        if(err){
+            console(err);
+            res.status(500).send("Error update ticket");
+        }
+        else{    
+            res.status(200).send(ticket);
+        }
+    });
+}
 
 //CREATE REQUEST
 exports.createRequest = function(req,res){
