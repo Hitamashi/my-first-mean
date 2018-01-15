@@ -108,8 +108,8 @@ exports.addComment = function(req,res){
             if (err) return res.status(500).send("There was a problem updating the user.");
             res.status(200).send(ticket);
         });
-    })
-}
+    });
+};
 
 exports.cancelTicket = function(req,res){
     var _ticket = {isArchived: true , modifiedDate: new Date(), archiveReason: req.body.reason};
