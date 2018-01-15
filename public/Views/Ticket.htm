@@ -5,6 +5,7 @@
     <h1>
         Tour {{tk.ticket._id}}
         <span class="label" ng-class="tk.colorStatus(tk.ticket.status._id)">{{tk.ticket.status.description}}</span>
+        <small class="label bg-red-gradient" ng-click="tk.showUpdates()" data-toggle="modal" data-target="#detailComment" style="cursor:pointer"><strong>{{tk.ticket.comments.length}} cập nhật</strong></small>
     </h1>
 </section>
 
@@ -14,10 +15,14 @@
     <div class="overlay" ng-show="tk.loading" style="position:fixed; display:block; top:0; left:0; width:100%; height: 100%;">
         <i class="fa fa-refresh fa-spin"></i>
     </div>
+    <modal-detail-comment comments="tk.ticket.comments"></modal-detail-comment>
 	<div class="row">
 		<div class='col-md-12'>
             <div class="pull-left" style="margin-bottom:10px">
-                <button class="btn btn-primary" ng-click="tk.cancelTicket()">Hủy tour</button>
+                <button class="btn btn-primary" title="Thêm Cập nhật" ng-click="tk.addComment()">
+                    <i class="fa fa-plus"></i>
+                </button>
+                <button class="btn btn-danger" ng-click="tk.cancelTicket()" ng-if="tk.checkDirector()">Hủy tour</button>
             </div>
 			<div class="pull-right" style="margin-bottom:10px">
 				<button class="btn btn-primary" ng-click="tk.toggleExpand()">{{tk.isExpandedAll?  'Collapse' : 'Expand'}} all</button>

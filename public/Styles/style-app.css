@@ -237,3 +237,41 @@ input:checked + .slider-button:before {
 {
 	width: 55px;
 }
+
+.comment-list-panel .panel-shadow {
+    box-shadow: rgba(0, 0, 0, 0.3) 7px 7px 7px;
+}
+.comment-list-panel .panel-white {
+  border: 1px solid #dddddd;
+}
+.comment-list-panel .panel-white  .panel-heading {
+  color: #333;
+  background-color: #fff;
+  border-color: #ddd;
+}
+.comment-list-panel .panel-white  .panel-footer {
+  background-color: #fff;
+  border-color: #ddd;
+}
+
+.comment-list-panel .post-comment .post-heading {
+  padding: 15px 15px 0 15px;
+}
+
+.comment-list-panel .post-comment .post-heading .meta .title {
+  margin-bottom: 0;
+}
+.comment-list-panel .post-comment .post-heading .meta .title a {
+  color: black;
+}
+.comment-list-panel .post-comment .post-heading .meta .title a:hover {
+  color: #aaaaaa;
+}
+.comment-list-panel .post-comment .post-heading .meta .time {
+  /*margin-top: 8px;*/
+  color: #999;
+}
+
+.comment-list-panel .post-comment .post-description {
+  padding: 15px 25px;
+}

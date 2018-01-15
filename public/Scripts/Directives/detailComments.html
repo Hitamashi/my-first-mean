@@ -1,0 +1,40 @@
+<div id="detailComment" class="modal fade" role="dialog" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Cập nhật</small></h4>
+            </div>
+            <div class="modal-body text-left">
+                <div class="row">
+                    <div class="col-12-md">
+                        <button class="btn btn-flat pull-right" ng-click="u.sort('createdDate')">
+                        Sắp xếp
+                        <span class="fa sort-icon" ng-show="u.sortKey=='createdDate'" ng-class="{'fa-angle-up':u.reverse,'fa-angle-down':!u.reverse}"></span>
+                        </button>
+                    </div>
+                </div>
+                <div class="comment-list-panel">
+                    <div class="panel panel-white post-comment panel-shadow" dir-paginate="d in u.comments | orderBy:u.sortKey:u.reverse | itemsPerPage: 3" current-page="u.page">
+                        <div class="post-heading">
+                            <div class="meta">
+                                <div class="title h4">
+                                    <b>{{d.user.name}}</b>
+                                    <small class="text-muted time">{{d.createdDate | date:'dd-MM-yyyy HH:mm'}}</small>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="post-description">
+                            <p>{{d.description}}</p>
+                        </div>
+                    </div>
+                    <dir-pagination-controls boundary-links="true" direction-links="true" max-size="4" template-url="/Scripts/Directives/dirPagination.tpl.html"></dir-pagination-controls>
+                </div>
+                
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="u.reset()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,3 +1,5 @@
+var app = angular.module('appSentinel');
+
 app.directive('requestForm', function () {
     return {
         restrict: 'EA',

@@ -1,4 +1,6 @@
-app.config(function ($routeProvider) {
+var app = angular.module('appSentinel');
+
+app.config(['$routeProvider', function ($routeProvider) {
     $routeProvider
     .when('/UserManagement',{
         templateUrl: '/Views/UserManagement.htm',
@@ -61,4 +63,4 @@ app.config(function ($routeProvider) {
     })
     .otherwise({redirectTo: '/Dashboard'})
     ;
-})
+}])

@@ -1,3 +1,4 @@
+var app = angular.module('appSentinel');
 app.factory('AuthService', ["$http", "$q", "$filter", "$cookies", "$window", "DataService",
 function ($http, $q, $filter, $cookies, $window, DataService) {
 

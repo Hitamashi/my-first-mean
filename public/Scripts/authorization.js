@@ -1,3 +1,5 @@
+var app = angular.module('appSentinel');
+
 app
 .factory("Access", ["$q", "UserProfile", function ($q, UserProfile) {
     var Access = {

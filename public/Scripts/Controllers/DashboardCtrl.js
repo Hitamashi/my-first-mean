@@ -1,3 +1,5 @@
+var app = angular.module('appSentinel');
+
 app.controller('DashboardCtrl', ['$scope', '$rootScope', '$filter', '$routeParams', '$interval', '$timeout', '$window', '$cookies', 'Upload', 'DataService', 'userProfile',
 function ($scope, $rootScope, $filter, $routeParams, $interval, $timeout, $window, $cookies, Upload, DataService, userProfile) {
     $scope.isDebug = false;

@@ -1,3 +1,5 @@
+var app = angular.module('appSentinel');
+
 app.controller('MainCtrl', ['$rootScope','$filter', '$cookies', '$window', 'DataService', 'AuthService',
 function ($rootScope, $filter, $cookies, $window, DataService, AuthService) {
     var self = this;

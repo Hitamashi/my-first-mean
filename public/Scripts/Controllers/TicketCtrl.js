@@ -1,3 +1,5 @@
+var app = angular.module('appSentinel');
+
 app.controller('TicketCtrl', ['$rootScope', '$filter', '$routeParams', '$interval', '$timeout', '$window', '$cookies', 'Upload', 'DataService', 'userProfile',
 function ($rootScope, $filter, $routeParams, $interval, $timeout, $window, $cookies, Upload, DataService, userProfile) {
     var self = this;
@@ -7,7 +9,8 @@ function ($rootScope, $filter, $routeParams, $interval, $timeout, $window, $cook
     self.ticket= {};
     self.ticket._id = $routeParams.id;
 
-    self.curentUser = $cookies.get('HM_USER_NAME');
+    self.currentUser = $cookies.get('HM_USER_NAME');
+    self.currentUserId = $cookies.get('HM_USER_ID');
     
     self.loading = true;
 
@@ -125,6 +128,51 @@ function ($rootScope, $filter, $routeParams, $interval, $timeout, $window, $cook
         });
     }
 
+    self.addComment = function(){
+        $window.swal({
+            title: 'Thêm cập nhật',
+            text: "Bạn muốn cập nhật tour? Nhập nội dung",
+            type: 'question',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes',
+            input: 'textarea',
+            inputValidator: function(text){
+                return new Promise((resolve) => {
+                    if (text && text !=='') {
+                        resolve();
+                    } else {
+                        resolve('Vui lòng nhập nội dung');
+                    }
+                })
+            },
+            showLoaderOnConfirm: true,
+            allowOutsideClick: false,
+            preConfirm: function(text) {
+                return new Promise(
+                    function(resolve){
+                        return DataService.sendRequest("POST", "/api/tickets/addComment", 
+                            {'data': {'ticket':self.ticket._id, 'user': self.currentUserId, 'description': text}})
+                            .then(function(data){
+                                $window.swal('Thành công','','success');
+                                $rootScope.$emit("reloadTicketPage");
+                            },
+                            function(data){
+                                $window.swal('Error!','Operation failed','error');
+                            });
+                    }
+                )
+            },
+        });
+    }
+
+    self.showUpdates = function(){
+        self.ticket.comments.sort(function(a,b){
+            return a.createdDate > b.createdDate;
+        });
+    }
+
     //Toggle expand all
     self.isExpandedAll = false;
 
@@ -150,5 +198,9 @@ function ($rootScope, $filter, $routeParams, $interval, $timeout, $window, $cook
 
     self.colorStatus = function(status){
         return DataService.colorStatus(status);
+    }
+
+    self.checkDirector = function(){
+        return DataService.checkRole(['director']);
     }
 } ]);

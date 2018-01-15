@@ -28,6 +28,8 @@ router.post('/newRequest',VerifyToken, TicketCtrl.createRequest);
 router.post('/denyRequest',VerifyToken, TicketCtrl.denyRequest);
 
 router.post('/cancelTicket',VerifyToken, TicketCtrl.cancelTicket);
+router.post('/addComment',VerifyToken, TicketCtrl.addComment);
+
 router.post('/create',VerifyToken, TicketCtrl.createTicket);
 router.get('/',VerifyToken, TicketCtrl.getListTicket);
 router.get('/:id',VerifyToken, TicketCtrl.getOneTicket);

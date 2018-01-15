@@ -10,6 +10,7 @@ var Info = require('./Info');
 var Contract = require('./Contract');
 var Estimation = require('./Estimation');
 var Follow = require('./Follow');
+var Comment = require('./Comment');
 
 var TicketStatus = require('./TicketStatus');
 
@@ -39,6 +40,7 @@ exports.getOneTicket = function (req, res) {
     .populate({path: 'estimation', populate:{path: 'estimationFile operator'}})
     .populate({path: 'contract', populate:{path: 'contractFile admin accountant'}})
     .populate({path: 'follow', populate:{path: 'accountant'}})
+    .populate({path: 'comments', populate:{path: 'user'}})
     .populate('status')
     .populate('user')
     .exec(function (err, ticket) {
@@ -92,6 +94,22 @@ exports.updateTicket = function (req, res) {
         res.status(200).send(ticket);
     });
 };
+
+exports.addComment = function(req,res){
+    console.log(req.body);
+    Comment.create({
+        user: req.body.user,
+        createdDate: new Date(),
+        description: req.body.description,
+    }, function(err, comment){
+        var query = {$push: {comments: comment._id}};
+
+        Ticket.findByIdAndUpdate(req.body.ticket, query, {new:true}, function(err,ticket){
+            if (err) return res.status(500).send("There was a problem updating the user.");
+            res.status(200).send(ticket);
+        });
+    })
+}
 
 exports.cancelTicket = function(req,res){
     var _ticket = {isArchived: true , modifiedDate: new Date(), archiveReason: req.body.reason};

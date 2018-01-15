@@ -1,4 +1,13 @@
-﻿var app = angular.module('appSentinel', ['ui.bootstrap', 'ngAnimate', 'ngSanitize', 'ui.select','angularUtils.directives.dirPagination', 'ngCookies', 'ngRoute','ngFileUpload', 'bcherny/formatAsCurrency']);
+﻿
+var app = angular.module('appSentinel', ['ui.bootstrap', 
+    'ngAnimate', 
+    'ngSanitize', 
+    'ui.select',
+    'angularUtils.directives.dirPagination', 
+    'ngCookies', 
+    'ngRoute',
+    'ngFileUpload', 
+    'bcherny/formatAsCurrency']);
 
 //FILTERS
 app.filter('propsFilter', function () {

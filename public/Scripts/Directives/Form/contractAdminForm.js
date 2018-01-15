@@ -1,3 +1,5 @@
+var app = angular.module('appSentinel');
+
 app.directive('contractAdminForm', function () {
     return {
         restrict: 'EA',

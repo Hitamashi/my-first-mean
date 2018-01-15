@@ -1,3 +1,5 @@
+var app = angular.module('appSentinel');
+
 app.controller('HistoryCtrl', ['$rootScope', '$filter', '$routeParams', '$interval', '$timeout', '$window', '$cookies', 'Upload', 'DataService', 'userProfile',
 function ($rootScope, $filter, $routeParams, $interval, $timeout, $window, $cookies, Upload, DataService, userProfile) {
     var self = this;

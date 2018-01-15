@@ -1,3 +1,5 @@
+var app = angular.module('appSentinel');
+
 app.controller('UserCtrl', ['$scope', '$rootScope', '$filter', '$cookies', '$window', 'DataService', 'AuthService'
 ,function ($scope, $rootScope, $filter, $cookies, $window, DataService, AuthService) {
 

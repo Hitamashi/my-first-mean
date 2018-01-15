@@ -18,6 +18,10 @@ var TicketSchema = new mongoose.Schema({
   	modifiedDate: { type : Date, default: Date.now },
   	finishDate: Date,
     isArchived: {type: Boolean, default: false},
+    comments: {
+      type: [{type: Schema.Types.ObjectId, ref: "Comment"}],
+      default: []
+    },
 });
 mongoose.model("Ticket", TicketSchema);
 

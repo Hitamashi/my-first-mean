@@ -1,4 +1,6 @@
-﻿app.factory('DataService', ["$http", "$q", "$filter", "$rootScope", function ($http, $q, $filter, $rootScope) {
+﻿/*jslint es6, white, browser */
+var app = angular.module('appSentinel');
+app.factory('DataService', ["$http", "$q", "$filter", "$rootScope", function ($http, $q, $filter, $rootScope) {
 
     function sendRequest(method, url, options={}){
         options.url = url;
