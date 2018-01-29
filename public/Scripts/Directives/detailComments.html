@@ -19,7 +19,7 @@
                             <div class="meta">
                                 <div class="title h4">
                                     <b>{{d.user.name}}</b>
-                                    <small class="text-muted time">{{d.createdDate | date:'dd-MM-yyyy HH:mm'}}</small>
+                                    <small class="text-muted time" title="{{d.createdDate | date: 'dd-MM-yyyy HH:mm'}}" >{{d.createdDate | timeago}}</small>
                                 </div>
 
                             </div>
