@@ -12,6 +12,8 @@ app.use(bodyParser.json());
 
 app.use(express.static(__dirname +'/public'));
 
+app.use('/home', express.static(__dirname +'/public/index.html'));
+
 app.get('/api', function (req, res) {
   res.status(200).send('API works.');
 });
