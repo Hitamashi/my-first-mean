@@ -16,7 +16,7 @@
 	<script src="Scripts/Vendor/bootstrap-notify.min.js"></script>
 	<script src="Scripts/Vendor/bootstrap-notify-custom.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootbox.js/4.4.0/bootbox.min.js"></script>
-	<title>My mean</title>
+	<title>Anpha internal</title>
 
 </head>
 
@@ -64,6 +64,10 @@
 	    }
 	    return "";
 	}
+
+	function toMainPage(){
+		window.location.href="/home";
+	}
 	
 	function checkCookie() {
 	    var user = decodeURIComponent(getCookie("HM_USER_NAME"));
@@ -75,7 +79,7 @@
 			$
 	        //GOTO main page
 	        window.setTimeout(function(){
-				window.location.href="/home";
+				toMainPage();
 			}, 4000);
 	    }
 	}
@@ -93,7 +97,7 @@
 				$('.form').fadeOut(500);
 				$('.wrapper-login').addClass('form-success-login');
 				window.setTimeout(function(){
-					window.location.href="/";
+					toMainPage();
 				}, 1000);
 			}
 			else{

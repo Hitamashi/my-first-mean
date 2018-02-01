@@ -25,7 +25,10 @@ router.post('/login', function(req, res) {
         }
 
         bcrypt.compare(req.body.password, user.password, function(err, valid){
-            if (err){ return res.status(500).send('Error on the server.');}
+            if (err){ 
+                console.log(err);
+                return res.status(500).send('Error on the server.');
+            }
             
             if(!valid){
                 console.log("Wrong pass");
